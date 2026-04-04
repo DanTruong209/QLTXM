@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng nhập | QLTXM</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+<div class="auth-shell">
+    <section class="auth-panel">
+        <div>
+            <p class="eyebrow">Truy cập QLTXM</p>
+            <h1>Đăng nhập hệ thống</h1>
+            <p class="muted-dark">Quản trị viên xử lý xe, khách hàng, đơn thuê và doanh thu. Người dùng theo dõi xe và gửi yêu cầu thuê.</p>
+        </div>
+
+        <div class="flash success" th:if="${param.registered}">Đăng ký thành công. Hãy đăng nhập.</div>
+        <div class="flash success" th:if="${param.logout}">Đã đăng xuất khỏi hệ thống.</div>
+        <div class="flash error" th:if="${param.error}">Sai tên đăng nhập hoặc mật khẩu.</div>
+
+        <form th:action="@{/login}" method="post" class="form-grid single-column">
+            <label>
+                <span>Tên đăng nhập</span>
+                <input type="text" name="username" required>
+            </label>
+            <label>
+                <span>Mật khẩu</span>
+                <input type="password" name="password" required>
+            </label>
+            <div class="form-actions full-width">
+                <button class="btn btn-primary auth-btn" type="submit">Đăng nhập</button>
+            </div>
+        </form>
+
+        <div class="auth-links">
+            <a class="text-link" th:href="@{/register}">Đăng ký tài khoản người dùng</a>
+        </div>
+
+        <div class="demo-box">
+            <p><strong>Quản trị mặc định:</strong> admin / admin123</p>
+            <p><strong>Tài khoản người dùng:</strong> user / user123</p>
+        </div>
+    </section>
+</div>
+</body>
+</html>

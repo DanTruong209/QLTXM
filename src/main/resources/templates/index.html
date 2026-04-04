@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tổng quan | QLTXM</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+<div class="app-shell">
+    <aside class="sidebar">
+        <div>
+            <p class="eyebrow">QLTXM</p>
+            <h1 class="brand-title"><span class="brand-icon">🏍️</span>Quản lý thuê xe máy</h1>
+            <p class="muted">Bảng điều hành cho cửa hàng thuê xe máy, theo dõi vận hành, đơn thuê và doanh thu.</p>
+        </div>
+        <nav class="nav-links">
+            <a class="active" th:href="@{/}">Tổng quan</a>
+            <a th:href="@{/motorbikes}">Xe máy</a>
+            <a th:href="@{/customers}">Khách hàng</a>
+            <a th:href="@{/rentals}">Phiếu thuê</a>
+        </nav>
+    </aside>
+
+    <main class="content">
+        <div class="page-header">
+            <div>
+                <p class="eyebrow">Bảng điều khiển</p>
+                <h2>Vận hành cửa hàng</h2>
+            </div>
+            <div class="action-row">
+                <a class="btn btn-primary" th:href="@{/rentals?status=PENDING}">Duyệt đơn chờ</a>
+                <a class="btn btn-secondary" th:href="@{/rentals/new}">Tạo phiếu thuê</a>
+                <form th:action="@{/logout}" method="post">
+                    <button class="btn btn-secondary" type="submit">Đăng xuất</button>
+                </form>
+            </div>
+        </div>
+
+        <section class="stats-grid">
+            <article class="stat-card">
+                <span>Tổng xe</span>
+                <strong th:text="${totalBikes}">0</strong>
+            </article>
+            <article class="stat-card">
+                <span>Xe sẵn sàng</span>
+                <strong th:text="${availableBikes}">0</strong>
+            </article>
+            <article class="stat-card">
+                <span>Xe đang thuê</span>
+                <strong th:text="${rentedBikes}">0</strong>
+            </article>
+            <article class="stat-card">
+                <span>Khách hàng</span>
+                <strong th:text="${totalCustomers}">0</strong>
+            </article>
+            <article class="stat-card accent">
+                <span>Đơn chờ duyệt</span>
+                <strong th:text="${pendingRentals}">0</strong>
+            </article>
+            <article class="stat-card">
+                <span>Đơn đang hoạt động</span>
+                <strong th:text="${activeRentals}">0</strong>
+            </article>
+            <article class="stat-card accent">
+                <span>Doanh thu đã hoàn tất</span>
+                <strong th:text="${#numbers.formatDecimal(completedRevenue, 0, 'COMMA', 0, 'POINT')} + ' VND'">0</strong>
+            </article>
+        </section>
+
+        <section class="report-grid">
+            <article class="report-card">
+                <span>Báo cáo trạng thái</span>
+                <h3>Phân bổ phiếu thuê</h3>
+                <div class="summary-grid">
+                    <div class="summary-card" th:each="item : ${statusSummary}">
+                        <small th:text="${item.label}">Chờ duyệt</small>
+                        <strong th:text="${item.count}">0</strong>
+                    </div>
+                </div>
+            </article>
+            <article class="report-card">
+                <span>Báo cáo doanh thu</span>
+                <h3>Doanh thu 6 tháng gần nhất</h3>
+                <div class="report-bars">
+                    <div class="report-row" th:each="item : ${monthlyRevenue}">
+                        <strong th:text="${item.label}">03/2026</strong>
+                        <div class="bar-track">
+                            <div class="bar-fill" th:style="'width:' + ${item.percent} + '%'"></div>
+                        </div>
+                        <span th:text="${#numbers.formatDecimal(item.amount, 0, 'COMMA', 0, 'POINT')} + ' VND'">0 VND</span>
+                    </div>
+                </div>
+            </article>
+        </section>
+
+        <section class="panel">
+            <div class="panel-header">
+                <div>
+                    <p class="eyebrow">Dòng hoạt động gần đây</p>
+                    <h3>Phiếu thuê mới nhất</h3>
+                    <p class="panel-subtitle">Theo dõi nhanh các đơn vừa tạo, đơn đang chạy và kết quả xử lý.</p>
+                </div>
+                <a class="text-link" th:href="@{/rentals}">Xem tất cả</a>
+            </div>
+
+            <div class="empty-state" th:if="${#lists.isEmpty(recentRentals)}">
+                Chưa có phiếu thuê nào. Hãy bắt đầu bằng một đơn thuê mới.
+            </div>
+
+            <div class="table-wrap" th:if="${!#lists.isEmpty(recentRentals)}">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Khách hàng</th>
+                        <th>Xe</th>
+                        <th>Từ ngày</th>
+                        <th>Đến ngày</th>
+                        <th>Tổng tiền</th>
+                        <th>Trạng thái</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="rental : ${recentRentals}">
+                        <td th:text="${rental.customer.fullName}">Khách</td>
+                        <td th:text="${rental.motorbike.brand + ' ' + rental.motorbike.model}">Xe</td>
+                        <td th:text="${rental.startDate}">2026-03-31</td>
+                        <td th:text="${rental.endDate}">2026-04-01</td>
+                        <td th:text="${#numbers.formatDecimal(rental.finalAmount ?: rental.totalAmount, 0, 'COMMA', 0, 'POINT')} + ' VND'">0</td>
+                        <td><span class="status-badge" th:text="${@viewUtils.rentalStatusLabel(rental.status)}">Trạng thái</span></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+</div>
+</body>
+</html>

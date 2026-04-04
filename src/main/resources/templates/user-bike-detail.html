@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi tiết xe | QLTXM</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+<div class="page narrow">
+    <header class="topbar">
+        <div>
+            <p class="eyebrow">Chi tiết xe</p>
+            <h1 th:text="${motorbike.brand + ' ' + motorbike.model}">Honda Vision</h1>
+        </div>
+        <div class="action-row">
+            <a class="btn btn-secondary" th:href="@{/user}">Quay lại</a>
+            <a class="btn btn-primary" th:href="@{/user/rentals/new}">Thuê xe này</a>
+        </div>
+    </header>
+
+    <section class="panel detail-grid">
+        <div class="full-width">
+            <img class="detail-hero-image"
+                 th:src="${motorbike.imageUrl != null and !#strings.isEmpty(motorbike.imageUrl)} ? ${motorbike.imageUrl} : @{/images/bikes/placeholder-bike.svg}"
+                 alt="Ảnh xe">
+        </div>
+        <div>
+            <h3>Thông tin cơ bản</h3>
+            <p><strong>Mã xe:</strong> <span th:text="${motorbike.code}"></span></p>
+            <p><strong>Hãng xe:</strong> <span th:text="${motorbike.brand}"></span></p>
+            <p><strong>Mẫu xe:</strong> <span th:text="${motorbike.model}"></span></p>
+            <p><strong>Biển số:</strong> <span th:text="${motorbike.licensePlate}"></span></p>
+        </div>
+        <div>
+            <h3>Giá và trạng thái</h3>
+            <p><strong>Giá thuê/ngày:</strong> <span th:text="${#numbers.formatDecimal(motorbike.dailyRate, 0, 'COMMA', 0, 'POINT')} + ' VND'"></span></p>
+            <p><strong>Trạng thái:</strong> <span class="status-badge" th:text="${@viewUtils.bikeStatusLabel(motorbike.status)}"></span></p>
+            <p><strong>Ghi chú:</strong> <span th:text="${motorbike.notes ?: 'Không có'}"></span></p>
+        </div>
+    </section>
+</div>
+</body>
+</html>

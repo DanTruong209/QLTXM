@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${pageTitle} + ' | QLTXM'">Phiếu thuê</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+<div class="page narrow">
+    <header class="topbar">
+        <div>
+            <p class="eyebrow">Phiếu thuê</p>
+            <h1 th:text="${pageTitle}">Lập phiếu thuê</h1>
+        </div>
+        <a class="btn btn-secondary" th:href="@{/rentals}">Quay lại</a>
+    </header>
+
+    <div class="flash error" th:if="${formError}" th:text="${formError}"></div>
+
+    <section class="panel">
+        <form th:object="${rental}"
+              th:action="${rental.id} == null ? @{/rentals} : @{'/rentals/' + ${rental.id}}"
+              method="post"
+              class="form-grid">
+            <label>
+                <span>Khách hàng</span>
+                <select th:field="*{customer.id}" required>
+                    <option value="">Chọn khách hàng</option>
+                    <option th:each="customer : ${customers}" th:value="${customer.id}" th:text="${customer.fullName + ' - ' + customer.phone}"></option>
+                </select>
+                <small class="field-error" th:errors="*{customer.id}"></small>
+            </label>
+            <label>
+                <span>Xe máy</span>
+                <select th:field="*{motorbike.id}" required th:disabled="${rental.id != null}">
+                    <option value="">Chọn xe máy</option>
+                    <option th:each="motorbike : ${motorbikes}"
+                            th:value="${motorbike.id}"
+                            th:text="${motorbike.code + ' - ' + motorbike.brand + ' ' + motorbike.model + ' (' + @viewUtils.bikeStatusLabel(motorbike.status) + ')'}"></option>
+                </select>
+                <input type="hidden" th:if="${rental.id != null}" th:field="*{motorbike.id}">
+                <small class="field-error" th:errors="*{motorbike.id}"></small>
+            </label>
+            <label>
+                <span>Ngày bắt đầu</span>
+                <input type="date" th:field="*{startDate}">
+                <small class="field-error" th:errors="*{startDate}"></small>
+            </label>
+            <label>
+                <span>Ngày kết thúc dự kiến</span>
+                <input type="date" th:field="*{endDate}">
+                <small class="field-error" th:errors="*{endDate}"></small>
+            </label>
+            <label>
+                <span>Tiền cọc</span>
+                <input type="number" step="1000" min="0" th:field="*{depositAmount}">
+            </label>
+            <label>
+                <span>Đơn giá/ngày</span>
+                <input type="number" step="1000" min="0" th:field="*{dailyRate}" readonly>
+            </label>
+            <label class="full-width">
+                <span>Ghi chú</span>
+                <textarea th:field="*{notes}" rows="4"></textarea>
+            </label>
+            <div class="form-actions full-width">
+                <button class="btn btn-primary" type="submit">Lưu phiếu thuê</button>
+            </div>
+        </form>
+    </section>
+</div>
+</body>
+</html>

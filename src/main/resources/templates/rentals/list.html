@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phiếu thuê | QLTXM</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+<div class="page">
+    <header class="topbar">
+        <div>
+            <p class="eyebrow">Nghiệp vụ</p>
+            <h1>Quản lý phiếu thuê</h1>
+        </div>
+        <div class="action-row">
+            <a class="btn btn-secondary" th:href="@{/}">Về tổng quan</a>
+            <a class="btn btn-primary" th:href="@{/rentals/new}">Lập phiếu thuê</a>
+        </div>
+    </header>
+
+    <div class="flash success" th:if="${successMessage}" th:text="${successMessage}"></div>
+
+    <section class="panel">
+        <form method="get" th:action="@{/rentals}" class="filter-bar">
+            <input type="text" name="q" th:value="${keyword}" placeholder="Tìm theo khách hàng, xe hoặc biển số">
+            <select name="status">
+                <option value="">Tất cả trạng thái</option>
+                <option th:each="item : ${statuses}"
+                        th:value="${item}"
+                        th:text="${@viewUtils.rentalStatusLabel(item)}"
+                        th:selected="${selectedStatus != null and selectedStatus.name() == item.name()}"></option>
+            </select>
+            <button class="btn btn-secondary" type="submit">Lọc</button>
+            <a class="btn btn-secondary" th:href="@{/rentals}">Đặt lại</a>
+        </form>
+
+        <div class="table-wrap">
+            <table>
+                <thead>
+                <tr>
+                    <th>Khách hàng</th>
+                    <th>Xe</th>
+                    <th>Từ ngày</th>
+                    <th>Đến ngày</th>
+                    <th>Tổng tiền</th>
+                    <th>Trạng thái</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="rental : ${rentals}">
+                    <td th:text="${rental.customer.fullName}">Khách</td>
+                    <td th:text="${rental.motorbike.brand + ' ' + rental.motorbike.model}">Xe</td>
+                    <td th:text="${rental.startDate}">2026-03-31</td>
+                    <td th:text="${rental.endDate}">2026-04-01</td>
+                    <td th:text="${#numbers.formatDecimal(rental.finalAmount ?: rental.totalAmount, 0, 'COMMA', 0, 'POINT')} + ' VND'">0</td>
+                    <td><span class="status-badge" th:text="${@viewUtils.rentalStatusLabel(rental.status)}">Trạng thái</span></td>
+                    <td>
+                        <div class="row-actions">
+                            <a class="text-link" th:href="@{'/rentals/' + ${rental.id}}">Chi tiết</a>
+                            <a class="text-link" th:if="${rental.status.name() == 'PENDING'}" th:href="@{'/rentals/' + ${rental.id} + '/edit'}">Sửa</a>
+                        </div>
+                    </td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(rentals)}">
+                    <td colspan="7">
+                        <div class="empty-state">Không có phiếu thuê nào khớp điều kiện lọc.</div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+</div>
+</body>
+</html>

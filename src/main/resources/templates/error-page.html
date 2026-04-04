@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lỗi thao tác | QLTXM</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+<div class="auth-shell">
+    <section class="auth-panel error-panel">
+        <p class="eyebrow">Hệ thống</p>
+        <h1 th:text="${errorTitle ?: 'Đã xảy ra lỗi'}">Đã xảy ra lỗi</h1>
+        <p class="muted-dark" th:text="${errorMessage ?: 'Vui lòng thử lại sau.'}">Vui lòng thử lại sau.</p>
+        <div class="action-row" style="justify-content:center; margin-top: 24px;">
+            <a class="btn btn-secondary" th:href="@{/login}">Về đăng nhập</a>
+            <a class="btn btn-primary" th:href="@{/}">Về trang chính</a>
+        </div>
+    </section>
+</div>
+</body>
+</html>

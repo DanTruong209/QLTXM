@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Khách hàng | QLTXM</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+<div class="page">
+    <header class="topbar">
+        <div>
+            <p class="eyebrow">Danh mục</p>
+            <h1>Quản lý khách hàng</h1>
+        </div>
+        <div class="action-row">
+            <a class="btn btn-secondary" th:href="@{/}">Về tổng quan</a>
+            <a class="btn btn-primary" th:href="@{/customers/new}">Thêm khách hàng</a>
+        </div>
+    </header>
+
+    <div class="flash success" th:if="${successMessage}" th:text="${successMessage}"></div>
+
+    <section class="panel">
+        <form method="get" th:action="@{/customers}" class="filter-bar">
+            <input type="text" name="q" th:value="${keyword}" placeholder="Tìm theo họ tên, số điện thoại, CCCD, địa chỉ">
+            <button class="btn btn-secondary" type="submit">Tìm kiếm</button>
+            <a class="btn btn-secondary" th:href="@{/customers}">Đặt lại</a>
+        </form>
+
+        <div class="table-wrap">
+            <table>
+                <thead>
+                <tr>
+                    <th>Họ tên</th>
+                    <th>Số điện thoại</th>
+                    <th>CCCD/CMND</th>
+                    <th>Địa chỉ</th>
+                    <th>Ghi chú</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="customer : ${customers}">
+                    <td th:text="${customer.fullName}">Nguyễn Văn An</td>
+                    <td th:text="${customer.phone}">0901234567</td>
+                    <td th:text="${customer.idCard}">079123456789</td>
+                    <td th:text="${customer.address ?: 'Không có'}">Hồ Chí Minh</td>
+                    <td th:text="${customer.notes ?: 'Không có'}">Không có</td>
+                    <td><a class="text-link" th:href="@{'/customers/' + ${customer.id} + '/edit'}">Sửa</a></td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(customers)}">
+                    <td colspan="6">
+                        <div class="empty-state">Không có khách hàng nào khớp với điều kiện tìm kiếm.</div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+</div>
+</body>
+</html>

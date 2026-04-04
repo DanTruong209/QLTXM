@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xe máy | QLTXM</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+<div class="page">
+    <header class="topbar">
+        <div>
+            <p class="eyebrow">Danh mục</p>
+            <h1>Quản lý xe máy</h1>
+        </div>
+        <div class="action-row">
+            <a class="btn btn-secondary" th:href="@{/}">Về tổng quan</a>
+            <a class="btn btn-primary" th:href="@{/motorbikes/new}">Thêm xe mới</a>
+        </div>
+    </header>
+
+    <div class="flash success" th:if="${successMessage}" th:text="${successMessage}"></div>
+
+    <section class="panel">
+        <form method="get" th:action="@{/motorbikes}" class="filter-bar">
+            <input type="text" name="q" th:value="${keyword}" placeholder="Tìm theo mã xe, hãng, mẫu xe, biển số">
+            <select name="status">
+                <option value="">Tất cả trạng thái</option>
+                <option th:each="item : ${statuses}"
+                        th:value="${item}"
+                        th:text="${@viewUtils.bikeStatusLabel(item)}"
+                        th:selected="${selectedStatus != null and selectedStatus.name() == item.name()}"></option>
+            </select>
+            <button class="btn btn-secondary" type="submit">Lọc</button>
+            <a class="btn btn-secondary" th:href="@{/motorbikes}">Đặt lại</a>
+        </form>
+
+        <div class="table-wrap">
+            <table>
+                <thead>
+                <tr>
+                    <th>Ảnh</th>
+                    <th>Mã xe</th>
+                    <th>Hãng</th>
+                    <th>Biển số</th>
+                    <th>Giá/ngày</th>
+                    <th>Trạng thái</th>
+                    <th>Ghi chú</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="motorbike : ${motorbikes}">
+                    <td>
+                        <img class="table-thumb"
+                             th:src="${motorbike.imageUrl != null and !#strings.isEmpty(motorbike.imageUrl)} ? ${motorbike.imageUrl} : @{/images/bikes/placeholder-bike.svg}"
+                             alt="Ảnh xe">
+                    </td>
+                    <td th:text="${motorbike.code}">XM001</td>
+                    <td th:text="${motorbike.brand + ' ' + motorbike.model}">Honda Vision</td>
+                    <td th:text="${motorbike.licensePlate}">59A1-12345</td>
+                    <td th:text="${#numbers.formatDecimal(motorbike.dailyRate, 0, 'COMMA', 0, 'POINT')} + ' VND'">0</td>
+                    <td><span class="status-badge" th:text="${@viewUtils.bikeStatusLabel(motorbike.status)}">Sẵn sàng</span></td>
+                    <td th:text="${motorbike.notes ?: 'Không có'}">Không có</td>
+                    <td><a class="text-link" th:href="@{'/motorbikes/' + ${motorbike.id} + '/edit'}">Sửa</a></td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(motorbikes)}">
+                    <td colspan="8">
+                        <div class="empty-state">Không có xe nào khớp với điều kiện lọc.</div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+</div>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dat xe | QLTXM</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+<div class="page narrow">
+    <header class="topbar">
+        <div>
+            <p class="eyebrow">Gui yeu cau thue xe</p>
+            <h1>Tao yeu cau thue xe may</h1>
+        </div>
+        <a class="btn btn-secondary" th:href="@{/user}">Quay lai</a>
+    </header>
+
+    <div class="flash error" th:if="${formError}" th:text="${formError}"></div>
+
+    <section class="panel">
+        <form th:action="@{/user/rentals/checkout}" th:object="${userRentalForm}" method="post" class="form-grid">
+            <label class="full-width">
+                <span>Chon xe may</span>
+                <select th:field="*{motorbikeId}">
+                    <option value="">Chon xe</option>
+                    <option th:each="motorbike : ${availableBikes}"
+                            th:value="${motorbike.id}"
+                            th:text="${motorbike.code + ' - ' + motorbike.brand + ' ' + motorbike.model + ' - ' + #numbers.formatDecimal(motorbike.dailyRate, 0, 'COMMA', 0, 'POINT') + ' VND/ngay'}"></option>
+                </select>
+                <small class="field-error" th:errors="*{motorbikeId}"></small>
+            </label>
+            <label>
+                <span>Ngay bat dau</span>
+                <input type="date" th:field="*{startDate}">
+                <small class="field-error" th:errors="*{startDate}"></small>
+            </label>
+            <label>
+                <span>Ngay ket thuc</span>
+                <input type="date" th:field="*{endDate}">
+                <small class="field-error" th:errors="*{endDate}"></small>
+            </label>
+            <label>
+                <span>Tien coc</span>
+                <input type="number" step="1000" min="0" th:field="*{depositAmount}">
+                <small class="field-error" th:errors="*{depositAmount}"></small>
+            </label>
+            <label class="full-width">
+                <span>Ghi chu</span>
+                <textarea rows="4" th:field="*{notes}"></textarea>
+                <small class="field-error" th:errors="*{notes}"></small>
+            </label>
+            <div class="form-actions full-width">
+                <button class="btn btn-primary" type="submit">Tiep tuc thanh toan</button>
+            </div>
+        </form>
+    </section>
+</div>
+</body>
+</html>

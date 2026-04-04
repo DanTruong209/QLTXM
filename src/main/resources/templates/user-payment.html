@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thanh toan | QLTXM</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+<div class="page narrow">
+    <header class="topbar">
+        <div>
+            <p class="eyebrow">Thanh toan don thue</p>
+            <h1>Xac nhan tien coc truoc khi gui yeu cau</h1>
+        </div>
+        <a class="btn btn-secondary" th:href="@{/user/rentals/new}">Sua thong tin</a>
+    </header>
+
+    <div class="flash error" th:if="${formError}" th:text="${formError}"></div>
+
+    <section class="checkout-layout">
+        <article class="panel checkout-summary">
+            <p class="eyebrow">Tom tat don hang</p>
+            <div class="checkout-bike">
+                <img class="checkout-bike-image"
+                     th:src="${checkoutSummary.motorbike.imageUrl != null and !#strings.isEmpty(checkoutSummary.motorbike.imageUrl)} ? ${checkoutSummary.motorbike.imageUrl} : @{/images/bikes/placeholder-bike.svg}"
+                     alt="Anh xe">
+                <div>
+                    <h3 th:text="${checkoutSummary.motorbike.brand + ' ' + checkoutSummary.motorbike.model}">Honda Vision</h3>
+                    <p class="muted-dark" th:text="${checkoutSummary.motorbike.code + ' - ' + checkoutSummary.motorbike.licensePlate}">MX01</p>
+                    <p class="muted-dark" th:text="${paymentForm.startDate + ' den ' + paymentForm.endDate}">2026-04-06 den 2026-04-08</p>
+                </div>
+            </div>
+            <div class="summary-list">
+                <div><span>So ngay thue</span><strong th:text="${checkoutSummary.rentalDays + ' ngay'}">3 ngay</strong></div>
+                <div><span>Gia theo ngay</span><strong th:text="${#numbers.formatDecimal(checkoutSummary.dailyRate, 0, 'COMMA', 0, 'POINT') + ' VND'}">0 VND</strong></div>
+                <div><span>Tong tien thue tam tinh</span><strong th:text="${#numbers.formatDecimal(checkoutSummary.rentalTotal, 0, 'COMMA', 0, 'POINT') + ' VND'}">0 VND</strong></div>
+                <div><span>Tien coc can thanh toan</span><strong class="accent-text" th:text="${#numbers.formatDecimal(checkoutSummary.depositAmount, 0, 'COMMA', 0, 'POINT') + ' VND'}">0 VND</strong></div>
+                <div><span>Con lai khi giao/tra xe</span><strong th:text="${#numbers.formatDecimal(checkoutSummary.remainingAmount, 0, 'COMMA', 0, 'POINT') + ' VND'}">0 VND</strong></div>
+            </div>
+            <div class="payment-note">
+                He thong ghi nhan tien coc ngay trong yeu cau thue. Phan con lai van duoc doi soat khi giao xe hoac ket thuc don.
+            </div>
+        </article>
+
+        <article class="panel">
+            <p class="eyebrow">Thong tin thanh toan</p>
+            <form th:action="@{/user/rentals}" th:object="${paymentForm}" method="post" class="form-grid single-column">
+                <input type="hidden" th:field="*{motorbikeId}">
+                <input type="hidden" th:field="*{startDate}">
+                <input type="hidden" th:field="*{endDate}">
+                <input type="hidden" th:field="*{depositAmount}">
+                <input type="hidden" th:field="*{notes}">
+
+                <label>
+                    <span>Phuong thuc thanh toan</span>
+                    <select th:field="*{paymentMethod}">
+                        <option value="">Chon phuong thuc</option>
+                        <option th:each="method : ${paymentMethods}"
+                                th:value="${method}"
+                                th:text="${@viewUtils.paymentMethodLabel(method)}"></option>
+                    </select>
+                    <small class="field-error" th:errors="*{paymentMethod}"></small>
+                </label>
+
+                <section class="payment-method-grid">
+                    <article class="payment-card">
+                        <span class="payment-icon">QR</span>
+                        <h3>Chuyen khoan ngan hang</h3>
+                        <p>Vietcombank - 0123 456 789</p>
+                        <p>Chu tai khoan: QLTXM RENTAL</p>
+                    </article>
+                    <article class="payment-card">
+                        <span class="payment-icon">M</span>
+                        <h3>Vi MoMo</h3>
+                        <p>So dien thoai nhan tien: 0901 234 567</p>
+                        <p>Noi dung: DATCOC + ma xe</p>
+                    </article>
+                    <article class="payment-card">
+                        <span class="payment-icon">C</span>
+                        <h3>Tien mat</h3>
+                        <p>Thanh toan tai cua hang khi den xem xe.</p>
+                        <p>He thong van ghi nhan de xu ly don.</p>
+                    </article>
+                </section>
+
+                <label class="checkbox-row">
+                    <input type="checkbox" th:field="*{depositConfirmed}">
+                    <span>Toi da thanh toan hoac san sang thanh toan tien coc theo thong tin tren.</span>
+                </label>
+                <small class="field-error" th:errors="*{depositConfirmed}"></small>
+
+                <div class="form-actions">
+                    <button class="btn btn-primary" type="submit">Xac nhan thanh toan va gui don</button>
+                </div>
+            </form>
+        </article>
+    </section>
+</div>
+</body>
+</html>
