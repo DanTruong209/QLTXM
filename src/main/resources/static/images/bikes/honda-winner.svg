@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540">
+  <rect width="960" height="540" fill="#f4f4f4"/>
+  <circle cx="248" cy="392" r="62" fill="#222"/>
+  <circle cx="248" cy="392" r="28" fill="#d4d4d4"/>
+  <circle cx="704" cy="392" r="62" fill="#222"/>
+  <circle cx="704" cy="392" r="28" fill="#d4d4d4"/>
+  <path d="M205 347c53-98 139-160 270-170 75-6 153 18 240 80l55 87-66 16-47-61-115 2-126 46H205z" fill="#202020"/>
+  <path d="M435 200c47 8 88 32 123 73h-118l-48 23-25-20c16-28 36-51 68-76z" fill="#595959"/>
+  <path d="M632 219h92l63 124-71 12-53-92-43-10z" fill="#ce8e22"/>
+  <rect x="118" y="102" width="320" height="64" rx="18" fill="#4a331f"/>
+  <text x="146" y="144" font-family="Segoe UI, Arial, sans-serif" font-size="34" font-weight="700" fill="#fff">Honda Winner X</text>
+</svg>

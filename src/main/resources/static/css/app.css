@@ -1,0 +1,651 @@
+:root {
+    --bg: #fff4f4;
+    --paper: #ffffff;
+    --panel: rgba(255, 255, 255, 0.96);
+    --line: #f3d3d5;
+    --text: #2f1214;
+    --muted: #7a1b1f;
+    --primary: #c3272b;
+    --primary-strong: #9d1f22;
+    --accent: #e34d51;
+    --danger: #b32a2a;
+    --warning: #c73b3b;
+    --shadow: 0 18px 50px rgba(179, 38, 38, 0.12);
+    font-family: "Segoe UI", sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    color: var(--text);
+    background:
+        radial-gradient(circle at top right, rgba(195, 34, 43, 0.16), transparent 28%),
+        radial-gradient(circle at bottom left, rgba(211, 77, 81, 0.12), transparent 25%),
+        var(--bg);
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.app-shell,
+.page {
+    min-height: 100vh;
+}
+
+.app-shell {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+}
+
+.sidebar,
+.content,
+.page {
+    padding: 32px;
+}
+
+.sidebar {
+    background: linear-gradient(180deg, #9c171b, #701316);
+    color: #fff8f7;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.brand-title,
+.topbar h1,
+.page-header h2,
+.panel h3,
+.error-panel h1 {
+    margin: 0;
+}
+
+.brand-title {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 1.95rem;
+}
+
+.brand-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.16);
+    color: white;
+    font-size: 1.16rem;
+}
+
+.eyebrow {
+    margin: 0 0 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: 12px;
+    color: var(--accent);
+    font-weight: 700;
+}
+
+.sidebar .eyebrow {
+    color: #f6c18b;
+}
+
+.muted {
+    color: rgba(239, 247, 241, 0.75);
+    line-height: 1.6;
+}
+
+.muted-dark {
+    color: var(--muted);
+    line-height: 1.6;
+}
+
+.nav-links {
+    display: grid;
+    gap: 12px;
+    margin-top: 36px;
+}
+
+.nav-links a {
+    padding: 14px 16px;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.nav-links a.active,
+.nav-links a:hover {
+    background: rgba(255, 255, 255, 0.16);
+}
+
+.content,
+.page {
+    width: 100%;
+}
+
+.topbar,
+.page-header,
+.panel-header,
+.action-row,
+.row-actions,
+.metric-list,
+.summary-grid {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.topbar,
+.page-header {
+    margin-bottom: 24px;
+}
+
+.stats-grid,
+.cards-grid,
+.report-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.stat-card,
+.panel,
+.bike-card,
+.report-card {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 24px;
+    box-shadow: var(--shadow);
+}
+
+.stat-card,
+.bike-card,
+.report-card {
+    padding: 20px;
+}
+
+.stat-card span,
+.bike-card .meta-label,
+.report-card span {
+    display: block;
+    color: var(--muted);
+    margin-bottom: 12px;
+}
+
+.stat-card strong,
+.report-card strong {
+    font-size: 34px;
+}
+
+.stat-card.accent {
+    background: linear-gradient(135deg, rgba(195, 34, 43, 0.95), rgba(157, 31, 34, 0.95));
+    color: white;
+}
+
+.stat-card.accent span {
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.panel {
+    padding: 24px;
+    margin-bottom: 24px;
+}
+
+.table-wrap {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    text-align: left;
+    padding: 14px 10px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+}
+
+th {
+    color: var(--muted);
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    border-radius: 999px;
+    padding: 12px 18px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: white;
+}
+
+.btn-primary:hover {
+    background: var(--primary-strong);
+}
+
+.btn-secondary {
+    background: white;
+    border: 1px solid var(--line);
+}
+
+.btn-danger {
+    background: var(--danger);
+    color: white;
+}
+
+.btn-small {
+    padding: 8px 12px;
+    font-size: 13px;
+}
+
+.text-link {
+    color: var(--primary);
+    font-weight: 700;
+}
+
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: rgba(195, 34, 43, 0.12);
+    color: var(--primary-strong);
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.status-badge.warning {
+    background: rgba(199, 59, 59, 0.14);
+    color: var(--warning);
+}
+
+.status-badge.danger {
+    background: rgba(179, 42, 42, 0.12);
+    color: var(--danger);
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.form-grid label {
+    display: grid;
+    gap: 8px;
+}
+
+.form-grid span {
+    font-weight: 700;
+}
+
+.form-grid input,
+.form-grid select,
+.form-grid textarea,
+.filter-bar input,
+.filter-bar select {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 14px;
+    border: 1px solid var(--line);
+    background: white;
+    color: var(--text);
+}
+
+.full-width {
+    grid-column: 1 / -1;
+}
+
+.form-actions {
+    margin-top: 8px;
+}
+
+.field-error {
+    color: var(--danger);
+    min-height: 16px;
+}
+
+.flash {
+    margin-bottom: 16px;
+    padding: 14px 18px;
+    border-radius: 16px;
+    font-weight: 600;
+}
+
+.flash.success {
+    background: rgba(195, 34, 43, 0.08);
+    color: var(--primary-strong);
+}
+
+.flash.error {
+    background: rgba(179, 42, 42, 0.14);
+    color: var(--danger);
+}
+
+.empty-state {
+    padding: 24px;
+    border-radius: 18px;
+    background: rgba(195, 34, 43, 0.08);
+    color: var(--muted);
+}
+
+.detail-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.detail-grid p,
+.bike-card p {
+    line-height: 1.7;
+}
+
+.narrow {
+    max-width: 1160px;
+    margin: 0 auto;
+}
+
+.error-panel {
+    margin-top: 12vh;
+    text-align: center;
+}
+
+.auth-shell {
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    padding: 24px;
+}
+
+.auth-panel {
+    width: min(520px, 100%);
+    padding: 32px;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 24px;
+    box-shadow: var(--shadow);
+}
+
+.single-column {
+    grid-template-columns: 1fr;
+}
+
+.auth-btn {
+    width: 100%;
+}
+
+.auth-links {
+    margin-top: 16px;
+}
+
+.demo-box {
+    margin-top: 18px;
+    padding: 16px;
+    border-radius: 16px;
+    background: rgba(195, 34, 43, 0.08);
+    color: var(--muted);
+}
+
+.filter-bar {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr auto auto;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.metric-list,
+.summary-grid {
+    flex-wrap: wrap;
+}
+
+.metric-chip,
+.summary-card {
+    padding: 14px 18px;
+    border-radius: 18px;
+    background: rgba(195, 34, 43, 0.08);
+}
+
+.summary-card strong {
+    display: block;
+    font-size: 28px;
+}
+
+.bike-card h3,
+.report-card h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.bike-card-image,
+.detail-hero-image,
+.motorbike-preview,
+.table-thumb {
+    display: block;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 18px;
+    border: 1px solid var(--line);
+    background: #fff;
+}
+
+.bike-card-image,
+.motorbike-preview {
+    height: 220px;
+    margin-bottom: 16px;
+}
+
+.detail-hero-image {
+    height: 380px;
+}
+
+.table-thumb {
+    width: 92px;
+    height: 64px;
+    border-radius: 12px;
+}
+
+.image-preview-box {
+    padding: 12px;
+    border-radius: 18px;
+    background: rgba(18, 102, 79, 0.06);
+}
+
+.bike-card .price {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--primary-strong);
+}
+
+.bike-card footer {
+    margin-top: 16px;
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.report-bars {
+    display: grid;
+    gap: 12px;
+}
+
+.report-row {
+    display: grid;
+    grid-template-columns: 90px 1fr 130px;
+    gap: 12px;
+    align-items: center;
+}
+
+.bar-track {
+    height: 12px;
+    border-radius: 999px;
+    background: rgba(195, 34, 43, 0.08);
+    overflow: hidden;
+}
+
+.bar-fill {
+    height: 100%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--accent), var(--primary));
+}
+
+.panel-subtitle {
+    margin: 4px 0 0;
+    color: var(--muted);
+}
+
+.checkout-layout {
+    display: grid;
+    grid-template-columns: minmax(300px, 1fr) minmax(340px, 1.1fr);
+    gap: 24px;
+    align-items: start;
+}
+
+.checkout-summary {
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(250, 245, 238, 0.96)),
+        var(--panel);
+}
+
+.checkout-bike {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 16px;
+    margin-bottom: 22px;
+}
+
+.checkout-bike-image {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+    border-radius: 18px;
+    border: 1px solid var(--line);
+    background: #fff;
+}
+
+.summary-list {
+    display: grid;
+    gap: 14px;
+}
+
+.summary-list div {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    padding-bottom: 14px;
+    border-bottom: 1px dashed var(--line);
+}
+
+.summary-list span {
+    color: var(--muted);
+}
+
+.accent-text {
+    color: var(--accent);
+}
+
+.payment-note {
+    margin-top: 18px;
+    padding: 16px 18px;
+    border-radius: 18px;
+    background: rgba(18, 102, 79, 0.08);
+    color: var(--muted);
+    line-height: 1.6;
+}
+
+.payment-method-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.payment-card {
+    padding: 18px;
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 1), rgba(244, 239, 230, 0.75));
+}
+
+.payment-card h3 {
+    margin: 10px 0 8px;
+}
+
+.payment-card p {
+    margin: 6px 0;
+    color: var(--muted);
+    line-height: 1.5;
+}
+
+.payment-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, var(--accent), #e0a45d);
+    color: white;
+    font-weight: 800;
+}
+
+.checkbox-row {
+    display: flex !important;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.checkbox-row input {
+    width: auto;
+    margin-top: 3px;
+}
+
+@media (max-width: 900px) {
+    .app-shell {
+        grid-template-columns: 1fr;
+    }
+
+    .sidebar {
+        min-height: auto;
+    }
+
+    .form-grid,
+    .detail-grid,
+    .filter-bar,
+    .report-row,
+    .checkout-layout,
+    .checkout-bike,
+    .payment-method-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .topbar,
+    .page-header,
+    .panel-header,
+    .action-row {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .bike-card footer {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540">
+  <rect width="960" height="540" fill="#eef3f7"/>
+  <circle cx="245" cy="392" r="64" fill="#222"/>
+  <circle cx="245" cy="392" r="29" fill="#d9d9d9"/>
+  <circle cx="700" cy="392" r="64" fill="#222"/>
+  <circle cx="700" cy="392" r="29" fill="#d9d9d9"/>
+  <path d="M194 345c52-95 135-154 268-164 88-7 159 18 247 82l49 82-60 14-45-60-114 0-124 46H194z" fill="#12664f"/>
+  <path d="M426 204c46 11 86 36 120 76h-116l-53 20-22-18c15-30 37-55 71-78z" fill="#0b4f3d"/>
+  <path d="M626 224h90l64 120-70 14-56-94-41-9z" fill="#2d3136"/>
+  <rect x="118" y="102" width="336" height="64" rx="18" fill="#0e3553"/>
+  <text x="146" y="144" font-family="Segoe UI, Arial, sans-serif" font-size="34" font-weight="700" fill="#fff">Yamaha Exciter</text>
+</svg>
