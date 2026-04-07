@@ -35,6 +35,11 @@ git push -u origin main
 3. Cấp quyền cho Jira truy cập repository `DanTruong209/QLTXM`.
 4. Sau khi kết nối xong, Jira sẽ tự động hiển thị commit/branch liên quan đến issue.
 
+## Hoàn thiện yêu cầu của thầy
+- File tổng kết: `TEACHER-DELIVERABLES.md`
+- Chứa nội dung đã làm, workflow Git/Jira và cách nghiệm thu
+- Dùng file này để thầy xem tiến trình và đánh giá
+
 ### Quy tắc đặt tên branch và commit
 - Tên branch nên có key issue Jira: `feature/QLTXM-1-add-login`
 - Commit message nên bắt đầu bằng key issue: `QLTXM-1 feat: add login page`
