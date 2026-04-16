@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head(title)">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${title}">QLTXM</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body th:fragment="layout(title, eyebrow, heading, subtitle, content)">
+<div class="auth-shell">
+    <section class="auth-panel" th:classappend="${heading} == null ? ' error-panel' : ''">
+        <div>
+            <p class="eyebrow" th:if="${eyebrow}" th:text="${eyebrow}">QLTXM</p>
+            <h1 th:if="${heading}" th:text="${heading}">Tiêu đề</h1>
+            <p class="muted-dark" th:if="${subtitle}" th:text="${subtitle}"></p>
+        </div>
+        <div th:replace="${content}"></div>
+    </section>
+</div>
+</body>
+</html>
+

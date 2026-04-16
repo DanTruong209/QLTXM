@@ -1,109 +1,111 @@
 <!DOCTYPE html>
 <html lang="vi" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chi tiết phiếu thuê | QLTXM</title>
-    <link rel="stylesheet" th:href="@{/css/app.css}">
-</head>
-<body>
-<div class="page narrow">
-    <header class="topbar">
-        <div>
-            <p class="eyebrow">Chi tiết</p>
-            <h1 th:text="'Phiếu thuê #' + ${rental.id}">Phiếu thuê</h1>
-        </div>
-        <div class="action-row">
-            <a class="btn btn-secondary" th:href="@{/rentals}">Quay lại</a>
-            <a class="btn btn-primary" th:if="${rental.status.name() == 'PENDING'}" th:href="@{'/rentals/' + ${rental.id} + '/edit'}">Sửa</a>
-        </div>
-    </header>
+<head th:replace="~{fragments/admin-layout :: head('Chi tiết phiếu thuê | QLTXM')}"></head>
+<body th:replace="~{fragments/admin-layout :: layout(
+        'Chi tiết phiếu thuê | QLTXM',
+        'rentals',
+        'Chi tiết phiếu thuê #' + ${rental.id},
+        'Chi tiết',
+        ~{::#headerActions},
+        ~{::#pageContent},
+        null
+    )}">
 
+<div id="headerActions">
+    <a class="btn btn-secondary" th:href="@{/rentals}">Quay lại</a>
+    <a class="btn btn-primary" th:if="${rental.status.name() == 'PENDING'}" th:href="@{'/rentals/' + ${rental.id} + '/edit'}">Sửa</a>
+</div>
+
+<div id="pageContent">
     <div class="flash success" th:if="${successMessage}" th:text="${successMessage}"></div>
 
     <section class="panel detail-grid">
-        <div>
-            <h3>Thông tin khách hàng</h3>
-            <p><strong>Họ tên:</strong> <span th:text="${rental.customer.fullName}"></span></p>
-            <p><strong>Điện thoại:</strong> <span th:text="${rental.customer.phone}"></span></p>
-            <p><strong>CCCD/CMND:</strong> <span th:text="${rental.customer.idCard}"></span></p>
-            <p><strong>Địa chỉ:</strong> <span th:text="${rental.customer.address ?: 'Không có'}"></span></p>
-        </div>
-        <div>
-            <h3>Thông tin xe</h3>
-            <p><strong>Xe:</strong> <span th:text="${rental.motorbike.brand + ' ' + rental.motorbike.model}"></span></p>
-            <p><strong>Mã xe:</strong> <span th:text="${rental.motorbike.code}"></span></p>
-            <p><strong>Biển số:</strong> <span th:text="${rental.motorbike.licensePlate}"></span></p>
-            <p><strong>Giá/ngày:</strong> <span th:text="${#numbers.formatDecimal(rental.dailyRate, 0, 'COMMA', 0, 'POINT')} + ' VND'"></span></p>
-        </div>
-        <div>
-            <h3>Thời gian thuê</h3>
-            <p><strong>Từ ngày:</strong> <span th:text="${rental.startDate}"></span></p>
-            <p><strong>Đến ngày:</strong> <span th:text="${rental.endDate}"></span></p>
-            <p><strong>Ngày trả thực tế:</strong> <span th:text="${rental.actualReturnDate ?: 'Chưa trả'}"></span></p>
-        </div>
-        <div>
-            <h3>Thanh toán</h3>
-            <p><strong>Tiền thuê cơ bản:</strong> <span th:text="${#numbers.formatDecimal(rental.totalAmount, 0, 'COMMA', 0, 'POINT')} + ' VND'"></span></p>
-            <p><strong>Phụ phí / phí trễ:</strong> <span th:text="${#numbers.formatDecimal(rental.lateFee ?: 0, 0, 'COMMA', 0, 'POINT')} + ' VND'"></span></p>
-            <p><strong>Tiền cọc:</strong> <span th:text="${#numbers.formatDecimal(rental.depositAmount ?: 0, 0, 'COMMA', 0, 'POINT')} + ' VND'"></span></p>
-            <p><strong>Thanh toán cuối:</strong> <span th:text="${#numbers.formatDecimal(rental.finalAmount ?: rental.totalAmount, 0, 'COMMA', 0, 'POINT')} + ' VND'"></span></p>
-            <p><strong>Trạng thái:</strong> <span class="status-badge" th:text="${@viewUtils.rentalStatusLabel(rental.status)}"></span></p>
-        </div>
-        <div class="full-width" th:if="${rental.notes}">
-            <h3>Ghi chú khi thuê</h3>
-            <p th:text="${rental.notes}"></p>
-        </div>
-        <div class="full-width" th:if="${rental.returnNotes}">
-            <h3>Ghi chú trả xe / từ chối</h3>
-            <p th:text="${rental.returnNotes}"></p>
-        </div>
+            <div>
+                <h3>Thông tin khách hàng</h3>
+                <p><strong>Họ tên:</strong> <span th:text="${rental.customer.fullName}"></span></p>
+                <p><strong>Điện thoại:</strong> <span th:text="${rental.customer.phone}"></span></p>
+                <p><strong>CCCD/CMND:</strong> <span th:text="${rental.customer.idCard}"></span></p>
+                <p><strong>Địa chỉ:</strong> <span th:text="${rental.customer.address ?: 'Không có'}"></span></p>
+            </div>
+            <div>
+                <h3>Thông tin xe</h3>
+                <p><strong>Mã đặt xe:</strong> <span th:text="${rental.bookingCode}"></span></p>
+                <p><strong>Xe:</strong> <span th:text="${rental.motorbike.brand + ' ' + rental.motorbike.model}"></span></p>
+                <p><strong>Mã xe:</strong> <span th:text="${rental.motorbike.code}"></span></p>
+                <p><strong>Biển số:</strong> <span th:text="${rental.motorbike.licensePlate}"></span></p>
+                <p><strong>Giá/ngày:</strong> <span th:text="${#numbers.formatDecimal(rental.dailyRate, 0, 'COMMA', 0, 'POINT')} + ' VND'"></span></p>
+                <p><strong>Vị trí:</strong> <span th:text="${rental.motorbike.locationLabel ?: 'Chưa cập nhật'}"></span></p>
+                <p><a class="text-link" th:href="@{'/tracking?bookingCode=' + ${rental.bookingCode}}">Xem bản đồ xe</a></p>
+            </div>
+            <div>
+                <h3>Thời gian thuê</h3>
+                <p><strong>Từ ngày:</strong> <span th:text="${rental.startDate}"></span></p>
+                <p><strong>Đến ngày:</strong> <span th:text="${rental.endDate}"></span></p>
+                <p><strong>Ngày trả thực tế:</strong> <span th:text="${rental.actualReturnDate ?: 'Chưa trả'}"></span></p>
+            </div>
+            <div>
+                <h3>Thanh toán</h3>
+                <p><strong>Tiền thuê cơ bản:</strong> <span th:text="${#numbers.formatDecimal(rental.totalAmount, 0, 'COMMA', 0, 'POINT')} + ' VND'"></span></p>
+                <p><strong>Phụ phí / phí trễ:</strong> <span th:text="${#numbers.formatDecimal(rental.lateFee ?: 0, 0, 'COMMA', 0, 'POINT')} + ' VND'"></span></p>
+                <p><strong>Tiền cọc:</strong> <span th:text="${#numbers.formatDecimal(rental.depositAmount ?: 0, 0, 'COMMA', 0, 'POINT')} + ' VND'"></span></p>
+                <p><strong>Thanh toán cuối:</strong> <span th:text="${#numbers.formatDecimal(rental.finalAmount ?: rental.totalAmount, 0, 'COMMA', 0, 'POINT')} + ' VND'"></span></p>
+                <p><strong>Trạng thái:</strong> <span class="status-badge" th:text="${@viewUtils.rentalStatusLabel(rental.status)}"></span></p>
+            </div>
+            <div class="full-width" th:if="${rental.notes}">
+                <h3>Ghi chú khi thuê</h3>
+                <p th:text="${rental.notes}"></p>
+            </div>
+            <div class="full-width" th:if="${rental.returnNotes}">
+                <h3>Ghi chú trả xe / từ chối</h3>
+                <p th:text="${rental.returnNotes}"></p>
+            </div>
     </section>
 
     <section class="panel" th:if="${rental.status.name() == 'PENDING'}">
-        <div class="panel-header">
-            <div>
-                <p class="eyebrow">Xử lý yêu cầu</p>
-                <h3>Duyệt hoặc từ chối đơn thuê</h3>
+            <div class="panel-header">
+                <div>
+                    <p class="eyebrow">Xử lý yêu cầu</p>
+                    <h3>Duyệt hoặc từ chối đơn thuê</h3>
+                </div>
             </div>
-        </div>
-        <div class="action-row">
-            <form th:action="@{'/rentals/' + ${rental.id} + '/approve'}" method="post">
-                <button class="btn btn-primary" type="submit">Duyệt đơn</button>
-            </form>
-            <form th:action="@{'/rentals/' + ${rental.id} + '/reject'}" method="post" class="inline-form">
-                <input type="text" name="reason" placeholder="Lý do từ chối" value="Đơn thuê không phù hợp điều kiện tiếp nhận">
-                <button class="btn btn-danger" type="submit">Từ chối</button>
-            </form>
-            <form th:action="@{'/rentals/' + ${rental.id} + '/cancel'}" method="post">
-                <button class="btn btn-secondary" type="submit">Hủy phiếu</button>
-            </form>
-        </div>
+            <div class="action-row">
+                <form th:action="@{'/rentals/' + ${rental.id} + '/approve'}" method="post">
+                    <button class="btn btn-primary" type="submit">Duyệt đơn</button>
+                </form>
+                <form th:action="@{'/rentals/' + ${rental.id} + '/reject'}" method="post" class="inline-form">
+                    <input type="text" name="reason" placeholder="Lý do từ chối" value="Đơn thuê không phù hợp điều kiện tiếp nhận">
+                    <button class="btn btn-danger" type="submit">Từ chối</button>
+                </form>
+                <form th:action="@{'/rentals/' + ${rental.id} + '/cancel'}" method="post">
+                    <button class="btn btn-secondary" type="submit">Hủy phiếu</button>
+                </form>
+            </div>
     </section>
 
     <section class="panel" th:if="${rental.status.name() == 'APPROVED' or rental.status.name() == 'ACTIVE'}">
-        <h3>Hoàn tất trả xe</h3>
-        <form th:action="@{'/rentals/' + ${rental.id} + '/complete'}" th:object="${returnForm}" method="post" class="form-grid">
-            <label>
-                <span>Ngày trả thực tế</span>
-                <input type="date" th:field="*{actualReturnDate}">
-                <small class="field-error" th:errors="*{actualReturnDate}"></small>
-            </label>
-            <label>
-                <span>Phụ phí thêm</span>
-                <input type="number" step="1000" min="0" th:field="*{extraFee}">
-                <small class="field-error" th:errors="*{extraFee}"></small>
-            </label>
-            <label class="full-width">
-                <span>Ghi chú trả xe</span>
-                <textarea rows="3" th:field="*{returnNotes}"></textarea>
-                <small class="field-error" th:errors="*{returnNotes}"></small>
-            </label>
-            <div class="form-actions full-width">
-                <button class="btn btn-primary" type="submit">Xác nhận trả xe</button>
-            </div>
-        </form>
+            <h3>Hoàn tất trả xe</h3>
+            <form th:action="@{'/rentals/' + ${rental.id} + '/complete'}" th:object="${returnForm}" method="post" class="form-grid">
+                <label>
+                    <span>Ngày trả thực tế</span>
+                    <input type="date" th:field="*{actualReturnDate}">
+                    <small class="field-error" th:errors="*{actualReturnDate}"></small>
+                </label>
+                <label>
+                    <span>Phụ phí thêm</span>
+                    <input type="number" step="1000" min="0" th:field="*{extraFee}">
+                    <small class="field-error" th:errors="*{extraFee}"></small>
+                </label>
+                <label class="full-width">
+                    <span>Ghi chú trả xe</span>
+                    <textarea rows="3" th:field="*{returnNotes}"></textarea>
+                    <small class="field-error" th:errors="*{returnNotes}"></small>
+                </label>
+                <div class="form-actions full-width">
+                    <button class="btn btn-primary" type="submit">Xác nhận trả xe</button>
+                </div>
+            </form>
     </section>
 </div>
+
 </body>
 </html>

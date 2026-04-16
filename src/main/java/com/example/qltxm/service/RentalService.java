@@ -17,6 +17,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.Locale;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -62,6 +63,14 @@ public class RentalService {
     public Rental findById(Long id) {
         return rentalRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Khong tim thay phieu thue"));
+    }
+
+    public Rental findByBookingCode(String bookingCode) {
+        return findById(parseBookingCode(bookingCode));
+    }
+
+    public String formatBookingCode(Long id) {
+        return id == null ? null : String.format(Locale.ROOT, "BOOK-%06d", id);
     }
 
     public RentalCheckoutSummary prepareCheckout(UserRentalForm form) {
@@ -279,5 +288,20 @@ public class RentalService {
             return null;
         }
         return keyword.trim();
+    }
+
+    private Long parseBookingCode(String bookingCode) {
+        if (bookingCode == null || bookingCode.isBlank()) {
+            throw new IllegalArgumentException("Vui long nhap ma dat xe");
+        }
+        String normalized = bookingCode.trim().toUpperCase(Locale.ROOT);
+        if (normalized.startsWith("BOOK-")) {
+            normalized = normalized.substring(5);
+        }
+        try {
+            return Long.parseLong(normalized);
+        } catch (NumberFormatException ex) {
+            throw new IllegalArgumentException("Ma dat xe khong hop le. Vi du: BOOK-000123");
+        }
     }
 }

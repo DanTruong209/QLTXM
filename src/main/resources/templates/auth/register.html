@@ -1,67 +1,62 @@
 <!DOCTYPE html>
 <html lang="vi" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Đăng ký | QLTXM</title>
-    <link rel="stylesheet" th:href="@{/css/app.css}">
-</head>
-<body>
-<div class="auth-shell">
-    <section class="auth-panel">
-        <div>
-            <p class="eyebrow">Tạo tài khoản người dùng</p>
-            <h1>Đăng ký</h1>
-            <p class="muted-dark">Tài khoản mới sẽ có quyền người dùng để xem xe, gửi yêu cầu thuê và theo dõi đơn của chính mình.</p>
+<head th:replace="~{fragments/auth-layout :: head('Đăng ký | QLTXM')}"></head>
+<body th:replace="~{fragments/auth-layout :: layout(
+        'Đăng ký | QLTXM',
+        'Tạo tài khoản người dùng',
+        'Đăng ký',
+        'Tài khoản mới sẽ có quyền người dùng để xem xe, gửi yêu cầu thuê và theo dõi đơn của chính mình.',
+        ~{::#pageContent}
+    )}">
+
+<div id="pageContent">
+    <div class="flash error" th:if="${formError}" th:text="${formError}"></div>
+
+    <form th:action="@{/register}" th:object="${registrationForm}" method="post" class="form-grid single-column">
+        <label>
+            <span>Họ và tên</span>
+            <input type="text" th:field="*{fullName}">
+            <small class="field-error" th:errors="*{fullName}"></small>
+        </label>
+        <label>
+            <span>Tên đăng nhập</span>
+            <input type="text" th:field="*{username}">
+            <small class="field-error" th:errors="*{username}"></small>
+        </label>
+        <label>
+            <span>Số điện thoại</span>
+            <input type="text" th:field="*{phone}">
+            <small class="field-error" th:errors="*{phone}"></small>
+        </label>
+        <label>
+            <span>CCCD/CMND</span>
+            <input type="text" th:field="*{idCard}">
+            <small class="field-error" th:errors="*{idCard}"></small>
+        </label>
+        <label>
+            <span>Địa chỉ</span>
+            <input type="text" th:field="*{address}">
+            <small class="field-error" th:errors="*{address}"></small>
+        </label>
+        <label>
+            <span>Mật khẩu</span>
+            <input type="password" th:field="*{password}">
+            <small class="field-error" th:errors="*{password}"></small>
+        </label>
+        <label>
+            <span>Nhập lại mật khẩu</span>
+            <input type="password" th:field="*{confirmPassword}">
+            <small class="field-error" th:errors="*{confirmPassword}"></small>
+        </label>
+        <div class="form-actions full-width">
+            <button class="btn btn-primary auth-btn" type="submit">Tạo tài khoản</button>
         </div>
+    </form>
 
-        <div class="flash error" th:if="${formError}" th:text="${formError}"></div>
-
-        <form th:action="@{/register}" th:object="${registrationForm}" method="post" class="form-grid single-column">
-            <label>
-                <span>Họ và tên</span>
-                <input type="text" th:field="*{fullName}">
-                <small class="field-error" th:errors="*{fullName}"></small>
-            </label>
-            <label>
-                <span>Tên đăng nhập</span>
-                <input type="text" th:field="*{username}">
-                <small class="field-error" th:errors="*{username}"></small>
-            </label>
-            <label>
-                <span>Số điện thoại</span>
-                <input type="text" th:field="*{phone}">
-                <small class="field-error" th:errors="*{phone}"></small>
-            </label>
-            <label>
-                <span>CCCD/CMND</span>
-                <input type="text" th:field="*{idCard}">
-                <small class="field-error" th:errors="*{idCard}"></small>
-            </label>
-            <label>
-                <span>Địa chỉ</span>
-                <input type="text" th:field="*{address}">
-                <small class="field-error" th:errors="*{address}"></small>
-            </label>
-            <label>
-                <span>Mật khẩu</span>
-                <input type="password" th:field="*{password}">
-                <small class="field-error" th:errors="*{password}"></small>
-            </label>
-            <label>
-                <span>Nhập lại mật khẩu</span>
-                <input type="password" th:field="*{confirmPassword}">
-                <small class="field-error" th:errors="*{confirmPassword}"></small>
-            </label>
-            <div class="form-actions full-width">
-                <button class="btn btn-primary auth-btn" type="submit">Tạo tài khoản</button>
-            </div>
-        </form>
-
-        <div class="auth-links">
-            <a class="text-link" th:href="@{/login}">Đã có tài khoản? Đăng nhập</a>
-        </div>
-    </section>
+    <div class="auth-links">
+        <a class="text-link" th:href="@{/login}">Đã có tài khoản? Đăng nhập</a>
+    </div>
 </div>
+
 </body>
 </html>

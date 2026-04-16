@@ -1,56 +1,57 @@
 <!DOCTYPE html>
 <html lang="vi" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title th:text="${pageTitle} + ' | QLTXM'">Khách hàng</title>
-    <link rel="stylesheet" th:href="@{/css/app.css}">
-</head>
-<body>
-<div class="page narrow">
-    <header class="topbar">
-        <div>
-            <p class="eyebrow">Khách hàng</p>
-            <h1 th:text="${pageTitle}">Thêm khách hàng</h1>
-        </div>
-        <a class="btn btn-secondary" th:href="@{/customers}">Quay lại</a>
-    </header>
+<head th:replace="~{fragments/admin-layout :: head(${pageTitle} + ' | QLTXM')}"></head>
+<body th:replace="~{fragments/admin-layout :: layout(
+        ${pageTitle} + ' | QLTXM',
+        'customers',
+        ${pageTitle},
+        'Khách hàng',
+        ~{::#headerActions},
+        ~{::#pageContent},
+        null
+    )}">
 
+<div id="headerActions">
+    <a class="btn btn-secondary" th:href="@{/customers}">Quay lại</a>
+</div>
+
+<div id="pageContent">
     <section class="panel">
         <form th:object="${customer}"
               th:action="${customer.id} == null ? @{/customers} : @{'/customers/' + ${customer.id}}"
               method="post"
               class="form-grid">
-            <label>
-                <span>Họ và tên</span>
-                <input type="text" th:field="*{fullName}">
-                <small class="field-error" th:errors="*{fullName}"></small>
-            </label>
-            <label>
-                <span>Số điện thoại</span>
-                <input type="text" th:field="*{phone}">
-                <small class="field-error" th:errors="*{phone}"></small>
-            </label>
-            <label>
-                <span>CCCD/CMND</span>
-                <input type="text" th:field="*{idCard}">
-                <small class="field-error" th:errors="*{idCard}"></small>
-            </label>
-            <label>
-                <span>Địa chỉ</span>
-                <input type="text" th:field="*{address}">
-                <small class="field-error" th:errors="*{address}"></small>
-            </label>
-            <label class="full-width">
-                <span>Ghi chú</span>
-                <textarea rows="4" th:field="*{notes}"></textarea>
-                <small class="field-error" th:errors="*{notes}"></small>
-            </label>
-            <div class="form-actions full-width">
-                <button class="btn btn-primary" type="submit">Lưu thông tin khách hàng</button>
-            </div>
+                <label>
+                    <span>Họ và tên</span>
+                    <input type="text" th:field="*{fullName}">
+                    <small class="field-error" th:errors="*{fullName}"></small>
+                </label>
+                <label>
+                    <span>Số điện thoại</span>
+                    <input type="text" th:field="*{phone}">
+                    <small class="field-error" th:errors="*{phone}"></small>
+                </label>
+                <label>
+                    <span>CCCD/CMND</span>
+                    <input type="text" th:field="*{idCard}">
+                    <small class="field-error" th:errors="*{idCard}"></small>
+                </label>
+                <label>
+                    <span>Địa chỉ</span>
+                    <input type="text" th:field="*{address}">
+                    <small class="field-error" th:errors="*{address}"></small>
+                </label>
+                <label class="full-width">
+                    <span>Ghi chú</span>
+                    <textarea rows="4" th:field="*{notes}"></textarea>
+                    <small class="field-error" th:errors="*{notes}"></small>
+                </label>
+                <div class="form-actions full-width">
+                    <button class="btn btn-primary" type="submit">Lưu thông tin khách hàng</button>
+                </div>
         </form>
     </section>
 </div>
+
 </body>
 </html>

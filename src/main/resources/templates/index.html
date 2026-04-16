@@ -1,41 +1,25 @@
 <!DOCTYPE html>
 <html lang="vi" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tổng quan | QLTXM</title>
-    <link rel="stylesheet" th:href="@{/css/app.css}">
-</head>
-<body>
-<div class="app-shell">
-    <aside class="sidebar">
-        <div>
-            <p class="eyebrow">QLTXM</p>
-            <h1 class="brand-title"><span class="brand-icon">🏍️</span>Quản lý thuê xe máy</h1>
-            <p class="muted">Bảng điều hành cho cửa hàng thuê xe máy, theo dõi vận hành, đơn thuê và doanh thu.</p>
-        </div>
-        <nav class="nav-links">
-            <a class="active" th:href="@{/}">Tổng quan</a>
-            <a th:href="@{/motorbikes}">Xe máy</a>
-            <a th:href="@{/customers}">Khách hàng</a>
-            <a th:href="@{/rentals}">Phiếu thuê</a>
-        </nav>
-    </aside>
+<head th:replace="~{fragments/admin-layout :: head('Tổng quan | QLTXM')}"></head>
+<body th:replace="~{fragments/admin-layout :: layout(
+        'Tổng quan | QLTXM',
+        'dashboard',
+        'Dashboard vận hành',
+        'Bảng điều khiển',
+        ~{::#headerActions},
+        ~{::#pageContent},
+        ~{::#pageScripts}
+    )}">
 
-    <main class="content">
-        <div class="page-header">
-            <div>
-                <p class="eyebrow">Bảng điều khiển</p>
-                <h2>Vận hành cửa hàng</h2>
-            </div>
-            <div class="action-row">
-                <a class="btn btn-primary" th:href="@{/rentals?status=PENDING}">Duyệt đơn chờ</a>
-                <a class="btn btn-secondary" th:href="@{/rentals/new}">Tạo phiếu thuê</a>
-                <form th:action="@{/logout}" method="post">
-                    <button class="btn btn-secondary" type="submit">Đăng xuất</button>
-                </form>
-            </div>
-        </div>
+<div id="headerActions">
+    <a class="btn btn-primary" th:href="@{/rentals?status=PENDING}">Duyệt đơn chờ</a>
+    <a class="btn btn-secondary" th:href="@{/rentals/new}">Tạo phiếu thuê</a>
+    <form th:action="@{/logout}" method="post">
+        <button class="btn btn-secondary" type="submit">Đăng xuất</button>
+    </form>
+</div>
+
+<div id="pageContent">
 
         <section class="stats-grid">
             <article class="stat-card">
@@ -78,10 +62,16 @@
                         <strong th:text="${item.count}">0</strong>
                     </div>
                 </div>
+                <div class="chart-card">
+                    <canvas id="rentalStatusChart" height="220"></canvas>
+                </div>
             </article>
             <article class="report-card">
                 <span>Báo cáo doanh thu</span>
                 <h3>Doanh thu 6 tháng gần nhất</h3>
+                <div class="chart-card">
+                    <canvas id="monthlyRevenueChart" height="220"></canvas>
+                </div>
                 <div class="report-bars">
                     <div class="report-row" th:each="item : ${monthlyRevenue}">
                         <strong th:text="${item.label}">03/2026</strong>
@@ -133,7 +123,108 @@
                 </table>
             </div>
         </section>
-    </main>
 </div>
+
+<div id="pageScripts">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <script th:inline="javascript">
+        const statusSummary = /*[[${statusSummary}]]*/ [];
+        const monthlyRevenue = /*[[${monthlyRevenue}]]*/ [];
+
+        const statusLabels = statusSummary.map(it => it.label);
+        const statusCounts = statusSummary.map(it => it.count);
+
+        const revenueLabels = monthlyRevenue.map(it => it.label);
+        const revenueAmounts = monthlyRevenue.map(it => it.amount);
+
+        const chartFont = {
+            family: '"Segoe UI", sans-serif',
+            size: 12
+        };
+
+        const commonLegend = {
+            position: 'bottom',
+            labels: {
+                boxWidth: 12,
+                boxHeight: 12,
+                usePointStyle: true,
+                font: chartFont
+            }
+        };
+
+        new Chart(document.getElementById('rentalStatusChart'), {
+            type: 'doughnut',
+            data: {
+                labels: statusLabels,
+                datasets: [{
+                    data: statusCounts,
+                    backgroundColor: [
+                        'rgba(195, 34, 43, 0.85)',
+                        'rgba(227, 77, 81, 0.75)',
+                        'rgba(156, 23, 27, 0.75)',
+                        'rgba(122, 27, 31, 0.55)',
+                        'rgba(199, 59, 59, 0.65)'
+                    ],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: commonLegend,
+                    tooltip: {
+                        callbacks: {
+                            label: (ctx) => `${ctx.label}: ${ctx.formattedValue}`
+                        }
+                    }
+                }
+            }
+        });
+
+        new Chart(document.getElementById('monthlyRevenueChart'), {
+            type: 'bar',
+            data: {
+                labels: revenueLabels,
+                datasets: [{
+                    label: 'Doanh thu (VND)',
+                    data: revenueAmounts,
+                    backgroundColor: 'rgba(195, 34, 43, 0.72)',
+                    borderRadius: 10
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: (ctx) => {
+                                const value = ctx.parsed.y ?? 0;
+                                return `Doanh thu: ${new Intl.NumberFormat('vi-VN').format(value)} VND`;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        ticks: { font: chartFont },
+                        grid: { display: false }
+                    },
+                    y: {
+                        ticks: {
+                            font: chartFont,
+                            callback: (value) => new Intl.NumberFormat('vi-VN').format(value)
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</div>
+
 </body>
 </html>

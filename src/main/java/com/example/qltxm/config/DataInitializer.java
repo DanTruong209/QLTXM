@@ -9,6 +9,7 @@ import com.example.qltxm.repository.AppUserRepository;
 import com.example.qltxm.repository.CustomerRepository;
 import com.example.qltxm.repository.MotorbikeRepository;
 import java.math.BigDecimal;
+import java.util.List;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,45 +30,63 @@ public class DataInitializer {
                         "Honda",
                         "Vision",
                         "59A1-12345",
-                        "Xe ga tiết kiệm xăng",
-                        "/images/bikes/honda-vision.svg"
+                        "Xe ga tiet kiem xang",
+                        "/images/bikes/honda-vision.svg",
+                        "Bai xe Quan 1, TP.HCM",
+                        new BigDecimal("10.776889"),
+                        new BigDecimal("106.700806")
                 ));
                 motorbikeRepository.save(createBike(
                         "XM002",
                         "Yamaha",
                         "Exciter 155",
                         "59A1-54321",
-                        "Xe côn tay cho khách du lịch",
-                        "/images/bikes/yamaha-exciter.svg"
+                        "Xe con tay cho khach du lich",
+                        "/images/bikes/yamaha-exciter.svg",
+                        "Bai xe Quan 3, TP.HCM",
+                        new BigDecimal("10.786653"),
+                        new BigDecimal("106.690406")
                 ));
                 motorbikeRepository.save(createBike(
                         "XM003",
                         "Honda",
                         "Winner X",
                         "59A1-67890",
-                        "Xe số mạnh cho thuê ngày",
-                        "/images/bikes/honda-winner.svg"
+                        "Xe so manh cho thue ngay",
+                        "/images/bikes/honda-winner.svg",
+                        "Bai xe Phu Nhuan, TP.HCM",
+                        new BigDecimal("10.801285"),
+                        new BigDecimal("106.679810")
                 ));
+            } else {
+                List<Motorbike> bikes = motorbikeRepository.findAll();
+                boolean changed = false;
+                for (Motorbike bike : bikes) {
+                    changed |= ensureLocation(bike);
+                }
+                if (changed) {
+                    motorbikeRepository.saveAll(bikes);
+                }
             }
 
             if (customerRepository.count() == 0) {
-                customerRepository.save(createCustomer("Nguyễn Văn An", "0901234567", "079123456789"));
-                customerRepository.save(createCustomer("Trần Thị Bình", "0912345678", "079987654321"));
+                customerRepository.save(createCustomer("Nguyen Van An", "0901234567", "079123456789"));
+                customerRepository.save(createCustomer("Tran Thi Binh", "0912345678", "079987654321"));
             }
 
             if (!appUserRepository.existsByUsername("admin")) {
-                appUserRepository.save(createUser("Quản trị viên", "admin", "admin123", UserRole.ADMIN, passwordEncoder));
+                appUserRepository.save(createUser("Quan tri vien", "admin", "admin123", UserRole.ADMIN, passwordEncoder));
             }
 
             if (!appUserRepository.existsByUsername("user")) {
                 Customer customer = customerRepository.findAll().stream().findFirst()
-                        .orElseGet(() -> customerRepository.save(createCustomer("Khách demo", "0988888888", "079000000001")));
-                appUserRepository.save(createUser("Khách demo", "user", "user123", UserRole.USER, passwordEncoder, customer));
+                        .orElseGet(() -> customerRepository.save(createCustomer("Khach demo", "0988888888", "079000000001")));
+                appUserRepository.save(createUser("Khach demo", "user", "user123", UserRole.USER, passwordEncoder, customer));
             } else {
                 appUserRepository.findByUsername("user").ifPresent(user -> {
                     if (user.getCustomer() == null) {
                         Customer customer = customerRepository.findAll().stream().findFirst()
-                                .orElseGet(() -> customerRepository.save(createCustomer("Khách demo", "0988888888", "079000000001")));
+                                .orElseGet(() -> customerRepository.save(createCustomer("Khach demo", "0988888888", "079000000001")));
                         user.setCustomer(customer);
                         appUserRepository.save(user);
                     }
@@ -76,7 +95,15 @@ public class DataInitializer {
         };
     }
 
-    private Motorbike createBike(String code, String brand, String model, String plate, String notes, String imageUrl) {
+    private Motorbike createBike(String code,
+                                 String brand,
+                                 String model,
+                                 String plate,
+                                 String notes,
+                                 String imageUrl,
+                                 String locationLabel,
+                                 BigDecimal latitude,
+                                 BigDecimal longitude) {
         Motorbike bike = new Motorbike();
         bike.setCode(code);
         bike.setBrand(brand);
@@ -86,7 +113,29 @@ public class DataInitializer {
         bike.setStatus(BikeStatus.AVAILABLE);
         bike.setNotes(notes);
         bike.setImageUrl(imageUrl);
+        bike.setLocationLabel(locationLabel);
+        bike.setLatitude(latitude);
+        bike.setLongitude(longitude);
         return bike;
+    }
+
+    private boolean ensureLocation(Motorbike bike) {
+        if (bike.hasLocation()) {
+            return false;
+        }
+        return switch (bike.getCode()) {
+            case "XM001" -> applyLocation(bike, "Bai xe Quan 1, TP.HCM", "10.776889", "106.700806");
+            case "XM002" -> applyLocation(bike, "Bai xe Quan 3, TP.HCM", "10.786653", "106.690406");
+            case "XM003" -> applyLocation(bike, "Bai xe Phu Nhuan, TP.HCM", "10.801285", "106.679810");
+            default -> false;
+        };
+    }
+
+    private boolean applyLocation(Motorbike bike, String label, String latitude, String longitude) {
+        bike.setLocationLabel(label);
+        bike.setLatitude(new BigDecimal(latitude));
+        bike.setLongitude(new BigDecimal(longitude));
+        return true;
     }
 
     private Customer createCustomer(String name, String phone, String idCard) {
@@ -94,7 +143,7 @@ public class DataInitializer {
         customer.setFullName(name);
         customer.setPhone(phone);
         customer.setIdCard(idCard);
-        customer.setAddress("Hồ Chí Minh");
+        customer.setAddress("Ho Chi Minh");
         return customer;
     }
 

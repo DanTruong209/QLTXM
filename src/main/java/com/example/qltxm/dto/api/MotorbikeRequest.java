@@ -1,75 +1,41 @@
-package com.example.qltxm.model;
+package com.example.qltxm.dto.api;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.example.qltxm.model.BikeStatus;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 
-@Entity
-@Table(name = "motorbikes")
-public class Motorbike {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class MotorbikeRequest {
 
     @NotBlank
-    @Column(nullable = false, unique = true, length = 30)
     private String code;
 
     @NotBlank
-    @Column(nullable = false, length = 100)
     private String brand;
 
     @NotBlank
-    @Column(nullable = false, length = 100)
     private String model;
 
     @NotBlank
-    @Column(nullable = false, unique = true, length = 30)
     private String licensePlate;
 
     @NotNull
     @DecimalMin("0.0")
-    @Column(nullable = false, precision = 12, scale = 2)
     private BigDecimal dailyRate;
 
     @NotNull
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 20)
-    private BikeStatus status = BikeStatus.AVAILABLE;
+    private BikeStatus status;
 
-    @Column(length = 500)
     private String notes;
 
-    @Column(length = 500)
     private String imageUrl;
 
-    @Column(precision = 10, scale = 6)
     private BigDecimal latitude;
 
-    @Column(precision = 10, scale = 6)
     private BigDecimal longitude;
 
-    @Column(length = 255)
     private String locationLabel;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getCode() {
         return code;
@@ -140,7 +106,7 @@ public class Motorbike {
     }
 
     public void setLatitude(BigDecimal latitude) {
-        this.latitude = scaleCoordinate(latitude);
+        this.latitude = latitude;
     }
 
     public BigDecimal getLongitude() {
@@ -148,7 +114,7 @@ public class Motorbike {
     }
 
     public void setLongitude(BigDecimal longitude) {
-        this.longitude = scaleCoordinate(longitude);
+        this.longitude = longitude;
     }
 
     public String getLocationLabel() {
@@ -157,13 +123,5 @@ public class Motorbike {
 
     public void setLocationLabel(String locationLabel) {
         this.locationLabel = locationLabel;
-    }
-
-    public boolean hasLocation() {
-        return latitude != null && longitude != null;
-    }
-
-    private BigDecimal scaleCoordinate(BigDecimal value) {
-        return value == null ? null : value.setScale(6, RoundingMode.HALF_UP);
     }
 }

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/admin-layout :: head('Theo dõi | QLTXM')}"></head>
+<body th:replace="~{fragments/admin-layout :: layout(
+        'Theo dõi | QLTXM',
+        'tracking',
+        'Tra cứu vị trí xe',
+        'Theo dõi',
+        ~{::#headerActions},
+        ~{::#pageContent},
+        null
+    )}">
+
+<div id="headerActions">
+    <a class="btn btn-secondary" th:href="@{/user}">Trang người dùng</a>
+</div>
+
+<div id="pageContent">
+    <section class="panel">
+        <form method="get" th:action="@{/tracking}" class="tracking-search">
+            <input type="text" name="bookingCode" th:value="${bookingCode}" placeholder="BOOK-000123">
+            <button class="btn btn-primary" type="submit">Xem bản đồ</button>
+        </form>
+
+        <div class="flash error" th:if="${lookupError}" th:text="${lookupError}"></div>
+        <div class="flash error" th:if="${locationError}" th:text="${locationError}"></div>
+
+        <div th:if="${rental != null}" class="tracking-layout">
+            <section class="tracking-summary">
+                <span class="status-badge" th:text="${@viewUtils.rentalStatusLabel(rental.status)}">Đang thuê</span>
+                <h3 th:text="${rental.bookingCode}">BOOK-000123</h3>
+                <p><strong>Khách hàng:</strong> <span th:text="${rental.customer.fullName}"></span></p>
+                <p><strong>Xe:</strong> <span th:text="${rental.motorbike.brand + ' ' + rental.motorbike.model}"></span></p>
+                <p><strong>Biển số:</strong> <span th:text="${rental.motorbike.licensePlate}"></span></p>
+                <p><strong>Địa điểm:</strong> <span th:text="${rental.motorbike.locationLabel ?: 'Chưa cập nhật'}"></span></p>
+                <p><strong>Tọa độ:</strong>
+                    <span th:text="${rental.motorbike.latitude}"></span>,
+                    <span th:text="${rental.motorbike.longitude}"></span>
+                </p>
+            </section>
+
+            <section class="panel tracking-map-panel" th:if="${mapEmbedUrl != null}">
+                <iframe class="tracking-map"
+                        th:src="${mapEmbedUrl}"
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"
+                        title="Bản đồ vị trí xe"></iframe>
+            </section>
+        </div>
+    </section>
+</div>
+
+</body>
+</html>

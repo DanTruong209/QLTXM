@@ -1,24 +1,21 @@
 <!DOCTYPE html>
 <html lang="vi" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Xe máy | QLTXM</title>
-    <link rel="stylesheet" th:href="@{/css/app.css}">
-</head>
-<body>
-<div class="page">
-    <header class="topbar">
-        <div>
-            <p class="eyebrow">Danh mục</p>
-            <h1>Quản lý xe máy</h1>
-        </div>
-        <div class="action-row">
-            <a class="btn btn-secondary" th:href="@{/}">Về tổng quan</a>
-            <a class="btn btn-primary" th:href="@{/motorbikes/new}">Thêm xe mới</a>
-        </div>
-    </header>
+<head th:replace="~{fragments/admin-layout :: head('Xe máy | QLTXM')}"></head>
+<body th:replace="~{fragments/admin-layout :: layout(
+        'Xe máy | QLTXM',
+        'motorbikes',
+        'Quản lý xe máy',
+        'Danh mục',
+        ~{::#headerActions},
+        ~{::#pageContent},
+        null
+    )}">
 
+<div id="headerActions">
+    <a class="btn btn-primary" th:href="@{/motorbikes/new}">Thêm xe mới</a>
+</div>
+
+<div id="pageContent">
     <div class="flash success" th:if="${successMessage}" th:text="${successMessage}"></div>
 
     <section class="panel">
@@ -45,6 +42,7 @@
                     <th>Biển số</th>
                     <th>Giá/ngày</th>
                     <th>Trạng thái</th>
+                    <th>Vị trí</th>
                     <th>Ghi chú</th>
                     <th></th>
                 </tr>
@@ -61,11 +59,12 @@
                     <td th:text="${motorbike.licensePlate}">59A1-12345</td>
                     <td th:text="${#numbers.formatDecimal(motorbike.dailyRate, 0, 'COMMA', 0, 'POINT')} + ' VND'">0</td>
                     <td><span class="status-badge" th:text="${@viewUtils.bikeStatusLabel(motorbike.status)}">Sẵn sàng</span></td>
+                    <td th:text="${motorbike.locationLabel ?: 'Chưa cập nhật'}">Bãi xe Quận 1</td>
                     <td th:text="${motorbike.notes ?: 'Không có'}">Không có</td>
                     <td><a class="text-link" th:href="@{'/motorbikes/' + ${motorbike.id} + '/edit'}">Sửa</a></td>
                 </tr>
                 <tr th:if="${#lists.isEmpty(motorbikes)}">
-                    <td colspan="8">
+                    <td colspan="9">
                         <div class="empty-state">Không có xe nào khớp với điều kiện lọc.</div>
                     </td>
                 </tr>
@@ -74,5 +73,6 @@
         </div>
     </section>
 </div>
+
 </body>
 </html>

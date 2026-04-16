@@ -1,0 +1,37 @@
+"Issue Type","Summary","Description","Epic Name","Epic Link","Priority","Labels","Original Estimate"
+"Epic","KAN-1 Quản lý thuê xe máy (QLTXM)","Phạm vi: Auth, Admin (Xe/Khách/Phiếu thuê), User portal (đặt xe/đặt cọc), Tracking theo bookingCode.\n\nBoard: Todo → Dev → InProgress → Test → Done.\nWorkflow (chỉ áp cho Task): Todo → Dev → InProgress → Test → Done; nhánh: Test → InProgress.\n\nGhi chú Confluence: tạo page tài liệu và dán link vào Description của từng Task (trường [Confluence]).","KAN-1 Quản lý thuê xe máy (QLTXM)","","High","epic,qltxm",""
+
+"Story","KAN-2 Xác thực người dùng (Login/Register)","Màn hình: Login + Register.\nAC: User đăng ký được, đăng nhập được; phân quyền USER/ADMIN; lỗi hiển thị rõ.\n","", "KAN-1 Quản lý thuê xe máy (QLTXM)","High","story,auth","2d"
+"Task","KAN-3 UI Login","Màn hình đăng nhập (Thymeleaf): field username/password, hiển thị lỗi.\n[Confluence]: <dán link page>\n","", "KAN-1 Quản lý thuê xe máy (QLTXM)","Medium","task,ui","1d"
+"Task","KAN-4 UI Register","Màn hình đăng ký: fullName/username/password/confirm + validate.\n[Confluence]: <dán link page>\n","", "KAN-1 Quản lý thuê xe máy (QLTXM)","Medium","task,ui","1d"
+"Task","KAN-5 Spring Security + phân quyền","Cấu hình route: /motorbikes/**,/customers/**,/rentals/** cho ADMIN; /user/** cho USER; /tracking/** public.\n[Confluence]: <dán link page>\n","", "KAN-1 Quản lý thuê xe máy (QLTXM)","High","task,security","1d"
+
+"Story","KAN-6 Quản lý xe (Admin)","Màn hình: Danh sách xe + Form thêm/sửa xe.\nAC: CRUD xe; filter theo trạng thái; dữ liệu hợp lệ.\n","", "KAN-1 Quản lý thuê xe máy (QLTXM)","High","story,motorbike","3d"
+"Task","KAN-7 Màn hình danh sách xe","List xe + search keyword + filter status.\n[Confluence]: <dán link page>\n","", "KAN-1 Quản lý thuê xe máy (QLTXM)","Medium","task,ui","1d"
+"Task","KAN-8 Màn hình form xe","Form thêm/sửa: code/brand/model/plate/dailyRate/status/notes.\n[Confluence]: <dán link page>\n","", "KAN-1 Quản lý thuê xe máy (QLTXM)","Medium","task,ui","1d"
+"Task","KAN-9 Logic dữ liệu xe + validation","Ràng buộc dữ liệu & lưu DB; thông báo lỗi khi invalid.\n[Confluence]: <dán link page>\n","", "KAN-1 Quản lý thuê xe máy (QLTXM)","Medium","task,backend","1d"
+
+"Story","KAN-10 Quản lý khách hàng (Admin)","Màn hình: Danh sách khách hàng + Form thêm/sửa.\nAC: CRUD khách hàng; search; validate SĐT/CCCD.\n","", "KAN-1 Quản lý thuê xe máy (QLTXM)","High","story,customer","3d"
+"Task","KAN-11 Màn hình danh sách khách","List + search theo keyword (tên/sđt/cccd).\n[Confluence]: <dán link page>\n","", "KAN-1 Quản lý thuê xe máy (QLTXM)","Medium","task,ui","1d"
+"Task","KAN-12 Màn hình form khách","Form thêm/sửa: fullName/phone/idCard/address.\n[Confluence]: <dán link page>\n","", "KAN-1 Quản lý thuê xe máy (QLTXM)","Medium","task,ui","1d"
+"Task","KAN-13 Logic dữ liệu khách + validation","Validation SĐT/CCCD; lưu DB; thông báo lỗi.\n[Confluence]: <dán link page>\n","", "KAN-1 Quản lý thuê xe máy (QLTXM)","Medium","task,backend","1d"
+
+"Story","KAN-14 Thuê/Trả xe (Admin)","Màn hình: Lập phiếu thuê + Chi tiết phiếu (duyệt/từ chối/hoàn tất).\nAC: Rental theo trạng thái PENDING/APPROVED/COMPLETED/CANCELLED/REJECTED; cập nhật trạng thái xe.\n","", "KAN-1 Quản lý thuê xe máy (QLTXM)","Highest","story,rental","3d"
+"Task","KAN-15 Màn hình lập phiếu thuê","Form tạo rental: chọn khách + xe + ngày thuê/trả + deposit/notes.\n[Confluence]: <dán link page>\n","", "KAN-1 Quản lý thuê xe máy (QLTXM)","High","task,ui","1d"
+"Task","KAN-16 Màn hình chi tiết + thao tác duyệt/từ chối","Detail hiển thị trạng thái; nút approve/reject + lý do.\n[Confluence]: <dán link page>\n","", "KAN-1 Quản lý thuê xe máy (QLTXM)","High","task,ui","1d"
+"Task","KAN-17 Hoàn tất trả xe + tính phí","Complete với actualReturnDate + extraFee; cập nhật xe về AVAILABLE.\n[Confluence]: <dán link page>\n","", "KAN-1 Quản lý thuê xe máy (QLTXM)","High","task,backend","1d"
+
+"Story","KAN-18 User đặt xe + thanh toán cọc","Màn hình: Form đặt xe + Checkout (tóm tắt & chọn payment method).\nAC: Tạo booking PENDING theo customer; user huỷ booking PENDING của mình.\n","", "KAN-1 Quản lý thuê xe máy (QLTXM)","High","story,user","3d"
+"Task","KAN-19 Màn hình form đặt xe","Chọn xe AVAILABLE + start/end date + deposit + notes.\n[Confluence]: <dán link page>\n","", "KAN-1 Quản lý thuê xe máy (QLTXM)","Medium","task,ui","1d"
+"Task","KAN-20 Màn hình checkout/đặt cọc","Hiển thị số ngày/tổng tiền/tiền cọc; chọn phương thức.\n[Confluence]: <dán link page>\n","", "KAN-1 Quản lý thuê xe máy (QLTXM)","Medium","task,ui","1d"
+"Task","KAN-21 Tạo booking + huỷ booking PENDING","Lưu bookingCode; enforce ownership; huỷ khi PENDING.\n[Confluence]: <dán link page>\n","", "KAN-1 Quản lý thuê xe máy (QLTXM)","High","task,backend","1d"
+
+"Story","KAN-22 Tracking public theo bookingCode","Màn hình: Tracking (public) nhập bookingCode.\nAC: tìm rental theo code; hiển thị map nếu xe có lat/lon.\n","", "KAN-1 Quản lý thuê xe máy (QLTXM)","Medium","story,tracking","1d"
+"Task","KAN-23 UI tracking + thông báo lỗi","Trang tracking nhập code; hiển thị không tìm thấy.\n[Confluence]: <dán link page>\n","", "KAN-1 Quản lý thuê xe máy (QLTXM)","Low","task,ui","0.5d"
+"Task","KAN-24 Lookup bookingCode","Service tìm rental theo bookingCode; xử lý exception.\n[Confluence]: <dán link page>\n","", "KAN-1 Quản lý thuê xe máy (QLTXM)","Medium","task,backend","0.5d"
+"Task","KAN-25 Embed bản đồ OSM","Render iframe theo lat/lon; fallback khi thiếu tọa độ.\n[Confluence]: <dán link page>\n","", "KAN-1 Quản lý thuê xe máy (QLTXM)","Low","task,ui","0.5d"
+
+"Story","KAN-26 Tích hợp Jira với Git & Confluence","Yêu cầu chấm: Jira hiển thị branch/commit/PR; Task có link Confluence trong description.","", "KAN-1 Quản lý thuê xe máy (QLTXM)","High","story,jira","2d"
+"Task","KAN-27 Kết nối Jira ↔ GitHub","Connect DVCS, test bằng branch/commit/PR có key KAN-xx.\n[Confluence]: <dán link page>\n","", "KAN-1 Quản lý thuê xe máy (QLTXM)","High","task,jira","1d"
+"Task","KAN-28 Kết nối Jira ↔ Confluence","Connect Confluence; tạo page tài liệu; dán link vào các task.\n[Confluence]: <dán link page>\n","", "KAN-1 Quản lý thuê xe máy (QLTXM)","High","task,confluence","1d"
+"Task","KAN-29 Tạo workflow chỉ dành cho Task","Tạo workflow Task: Todo → Dev → InProgress → Test → Done; thêm transition Test → InProgress.\n[Confluence]: <dán link page>\n","", "KAN-1 Quản lý thuê xe máy (QLTXM)","Medium","task,workflow","1d"

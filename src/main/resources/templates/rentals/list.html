@@ -1,24 +1,21 @@
 <!DOCTYPE html>
 <html lang="vi" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Phiếu thuê | QLTXM</title>
-    <link rel="stylesheet" th:href="@{/css/app.css}">
-</head>
-<body>
-<div class="page">
-    <header class="topbar">
-        <div>
-            <p class="eyebrow">Nghiệp vụ</p>
-            <h1>Quản lý phiếu thuê</h1>
-        </div>
-        <div class="action-row">
-            <a class="btn btn-secondary" th:href="@{/}">Về tổng quan</a>
-            <a class="btn btn-primary" th:href="@{/rentals/new}">Lập phiếu thuê</a>
-        </div>
-    </header>
+<head th:replace="~{fragments/admin-layout :: head('Phiếu thuê | QLTXM')}"></head>
+<body th:replace="~{fragments/admin-layout :: layout(
+        'Phiếu thuê | QLTXM',
+        'rentals',
+        'Quản lý phiếu thuê',
+        'Nghiệp vụ',
+        ~{::#headerActions},
+        ~{::#pageContent},
+        null
+    )}">
 
+<div id="headerActions">
+    <a class="btn btn-primary" th:href="@{/rentals/new}">Lập phiếu thuê</a>
+</div>
+
+<div id="pageContent">
     <div class="flash success" th:if="${successMessage}" th:text="${successMessage}"></div>
 
     <section class="panel">
@@ -73,5 +70,6 @@
         </div>
     </section>
 </div>
+
 </body>
 </html>

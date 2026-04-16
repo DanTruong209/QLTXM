@@ -1,24 +1,17 @@
 <!DOCTYPE html>
 <html lang="vi" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chi tiết xe | QLTXM</title>
-    <link rel="stylesheet" th:href="@{/css/app.css}">
-</head>
-<body>
-<div class="page narrow">
-    <header class="topbar">
-        <div>
-            <p class="eyebrow">Chi tiết xe</p>
-            <h1 th:text="${motorbike.brand + ' ' + motorbike.model}">Honda Vision</h1>
-        </div>
-        <div class="action-row">
-            <a class="btn btn-secondary" th:href="@{/user}">Quay lại</a>
-            <a class="btn btn-primary" th:href="@{/user/rentals/new}">Thuê xe này</a>
-        </div>
-    </header>
+<head th:replace="~{fragments/user-layout :: head('Chi tiết xe | QLTXM')}"></head>
+<body th:replace="~{fragments/user-layout :: layout(
+        'Chi tiết xe | QLTXM',
+        'Chi tiết xe',
+        ${motorbike.brand + ' ' + motorbike.model},
+        null,
+        null,
+        ~{::#pageContent},
+        null
+    )}">
 
+<div id="pageContent">
     <section class="panel detail-grid">
         <div class="full-width">
             <img class="detail-hero-image"
@@ -40,5 +33,6 @@
         </div>
     </section>
 </div>
+
 </body>
 </html>

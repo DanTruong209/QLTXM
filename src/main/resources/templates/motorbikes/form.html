@@ -1,80 +1,96 @@
 <!DOCTYPE html>
 <html lang="vi" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title th:text="${pageTitle} + ' | QLTXM'">Xe máy</title>
-    <link rel="stylesheet" th:href="@{/css/app.css}">
-</head>
-<body>
-<div class="page narrow">
-    <header class="topbar">
-        <div>
-            <p class="eyebrow">Danh mục xe</p>
-            <h1 th:text="${pageTitle}">Thêm xe máy</h1>
-        </div>
-        <a class="btn btn-secondary" th:href="@{/motorbikes}">Quay lại</a>
-    </header>
+<head th:replace="~{fragments/admin-layout :: head(${pageTitle} + ' | QLTXM')}"></head>
+<body th:replace="~{fragments/admin-layout :: layout(
+        ${pageTitle} + ' | QLTXM',
+        'motorbikes',
+        ${pageTitle},
+        'Danh mục xe',
+        ~{::#headerActions},
+        ~{::#pageContent},
+        null
+    )}">
 
+<div id="headerActions">
+    <a class="btn btn-secondary" th:href="@{/motorbikes}">Quay lại</a>
+</div>
+
+<div id="pageContent">
     <section class="panel">
         <form th:object="${motorbike}"
               th:action="${motorbike.id} == null ? @{/motorbikes} : @{'/motorbikes/' + ${motorbike.id}}"
               method="post"
               class="form-grid">
-            <label>
-                <span>Mã xe</span>
-                <input type="text" th:field="*{code}">
-                <small class="field-error" th:errors="*{code}"></small>
-            </label>
-            <label>
-                <span>Hãng xe</span>
-                <input type="text" th:field="*{brand}">
-                <small class="field-error" th:errors="*{brand}"></small>
-            </label>
-            <label>
-                <span>Mẫu xe</span>
-                <input type="text" th:field="*{model}">
-                <small class="field-error" th:errors="*{model}"></small>
-            </label>
-            <label>
-                <span>Biển số</span>
-                <input type="text" th:field="*{licensePlate}">
-                <small class="field-error" th:errors="*{licensePlate}"></small>
-            </label>
-            <label>
-                <span>Giá thuê/ngày</span>
-                <input type="number" step="1000" min="0" th:field="*{dailyRate}">
-                <small class="field-error" th:errors="*{dailyRate}"></small>
-            </label>
-            <label>
-                <span>Trạng thái</span>
-                <select th:field="*{status}">
-                    <option th:each="item : ${statuses}"
-                            th:value="${item}"
-                            th:text="${@viewUtils.bikeStatusLabel(item)}"></option>
-                </select>
-                <small class="field-error" th:errors="*{status}"></small>
-            </label>
-            <label class="full-width">
-                <span>Ảnh xe</span>
-                <input type="text" th:field="*{imageUrl}" placeholder="/images/bikes/honda-vision.svg hoặc https://...">
-                <small class="field-error">Bạn có thể nhập đường dẫn ảnh trong project hoặc URL ảnh ngoài.</small>
-            </label>
-            <div class="full-width image-preview-box">
-                <img class="motorbike-preview"
-                     th:src="${motorbike.imageUrl != null and !#strings.isEmpty(motorbike.imageUrl)} ? ${motorbike.imageUrl} : @{/images/bikes/placeholder-bike.svg}"
-                     alt="Xem trước ảnh xe">
-            </div>
-            <label class="full-width">
-                <span>Ghi chú</span>
-                <textarea rows="4" th:field="*{notes}"></textarea>
-                <small class="field-error" th:errors="*{notes}"></small>
-            </label>
-            <div class="form-actions full-width">
-                <button class="btn btn-primary" type="submit">Lưu thông tin xe</button>
-            </div>
+                <label>
+                    <span>Mã xe</span>
+                    <input type="text" th:field="*{code}">
+                    <small class="field-error" th:errors="*{code}"></small>
+                </label>
+                <label>
+                    <span>Hãng xe</span>
+                    <input type="text" th:field="*{brand}">
+                    <small class="field-error" th:errors="*{brand}"></small>
+                </label>
+                <label>
+                    <span>Mẫu xe</span>
+                    <input type="text" th:field="*{model}">
+                    <small class="field-error" th:errors="*{model}"></small>
+                </label>
+                <label>
+                    <span>Biển số</span>
+                    <input type="text" th:field="*{licensePlate}">
+                    <small class="field-error" th:errors="*{licensePlate}"></small>
+                </label>
+                <label>
+                    <span>Giá thuê/ngày</span>
+                    <input type="number" step="1000" min="0" th:field="*{dailyRate}">
+                    <small class="field-error" th:errors="*{dailyRate}"></small>
+                </label>
+                <label>
+                    <span>Trạng thái</span>
+                    <select th:field="*{status}">
+                        <option th:each="item : ${statuses}"
+                                th:value="${item}"
+                                th:text="${@viewUtils.bikeStatusLabel(item)}"></option>
+                    </select>
+                    <small class="field-error" th:errors="*{status}"></small>
+                </label>
+                <label>
+                    <span>Vĩ độ</span>
+                    <input type="number" step="0.000001" th:field="*{latitude}" placeholder="10.776889">
+                    <small class="field-error" th:errors="*{latitude}"></small>
+                </label>
+                <label>
+                    <span>Kinh độ</span>
+                    <input type="number" step="0.000001" th:field="*{longitude}" placeholder="106.700806">
+                    <small class="field-error" th:errors="*{longitude}"></small>
+                </label>
+                <label class="full-width">
+                    <span>Địa điểm hiện tại</span>
+                    <input type="text" th:field="*{locationLabel}" placeholder="Bãi xe Quận 1, TP.HCM">
+                    <small class="field-error" th:errors="*{locationLabel}"></small>
+                </label>
+                <label class="full-width">
+                    <span>Ảnh xe</span>
+                    <input type="text" th:field="*{imageUrl}" placeholder="/images/bikes/honda-vision.svg hoặc https://...">
+                    <small class="field-error">Có thể nhập đường dẫn trong project hoặc URL ảnh ngoài.</small>
+                </label>
+                <div class="full-width image-preview-box">
+                    <img class="motorbike-preview"
+                         th:src="${motorbike.imageUrl != null and !#strings.isEmpty(motorbike.imageUrl)} ? ${motorbike.imageUrl} : @{/images/bikes/placeholder-bike.svg}"
+                         alt="Xem trước ảnh xe">
+                </div>
+                <label class="full-width">
+                    <span>Ghi chú</span>
+                    <textarea rows="4" th:field="*{notes}"></textarea>
+                    <small class="field-error" th:errors="*{notes}"></small>
+                </label>
+                <div class="form-actions full-width">
+                    <button class="btn btn-primary" type="submit">Lưu thông tin xe</button>
+                </div>
         </form>
     </section>
 </div>
+
 </body>
 </html>

@@ -1,0 +1,157 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] -------------------------< com.example:qltxm >--------------------------
+[INFO] Building QLTXM 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] >>> spring-boot:3.4.4:run (default-cli) > test-compile @ qltxm >>>
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ qltxm ---
+[INFO] Copying 1 resource from src\main\resources to target\classes
+[INFO] Copying 15 resources from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.13.0:compile (default-compile) @ qltxm ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ qltxm ---
+[INFO] skip non existing resourceDirectory C:\Users\Admin\Downloads\demo\QLTXM\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.13.0:testCompile (default-testCompile) @ qltxm ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] <<< spring-boot:3.4.4:run (default-cli) < test-compile @ qltxm <<<
+[INFO] 
+[INFO] 
+[INFO] --- spring-boot:3.4.4:run (default-cli) @ qltxm ---
+[INFO] Attaching agents: []
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.4.4)
+
+2026-03-31T23:20:56.688+07:00  INFO 24140 --- [           main] com.example.qltxm.QltxmApplication       : Starting QltxmApplication using Java 25.0.2 with PID 24140 (C:\Users\Admin\Downloads\demo\QLTXM\target\classes started by Admin in C:\Users\Admin\Downloads\demo\QLTXM)
+2026-03-31T23:20:56.691+07:00  INFO 24140 --- [           main] com.example.qltxm.QltxmApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-03-31T23:20:57.398+07:00  INFO 24140 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-03-31T23:20:57.477+07:00  INFO 24140 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 70 ms. Found 4 JPA repository interfaces.
+2026-03-31T23:20:58.040+07:00  INFO 24140 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8081 (http)
+2026-03-31T23:20:58.060+07:00  INFO 24140 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-03-31T23:20:58.061+07:00  INFO 24140 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.39]
+2026-03-31T23:20:58.119+07:00  INFO 24140 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-03-31T23:20:58.120+07:00  INFO 24140 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1352 ms
+2026-03-31T23:20:58.254+07:00  INFO 24140 --- [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-03-31T23:20:58.293+07:00  INFO 24140 --- [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.11.Final
+2026-03-31T23:20:58.322+07:00  INFO 24140 --- [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-03-31T23:20:58.586+07:00  INFO 24140 --- [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-03-31T23:20:58.630+07:00  INFO 24140 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-03-31T23:20:58.797+07:00  INFO 24140 --- [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@39c7fb0b
+2026-03-31T23:20:58.799+07:00  INFO 24140 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-03-31T23:20:58.864+07:00  INFO 24140 --- [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.4.3
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-03-31T23:20:59.627+07:00  INFO 24140 --- [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+Hibernate: alter table app_users modify column role enum ('ADMIN','USER') not null
+Hibernate: alter table motorbikes modify column status enum ('AVAILABLE','MAINTENANCE','RENTED') not null
+Hibernate: alter table rentals modify column status enum ('ACTIVE','CANCELLED','COMPLETED') not null
+2026-03-31T23:20:59.768+07:00  INFO 24140 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-03-31T23:21:00.132+07:00  WARN 24140 --- [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-03-31T23:21:00.163+07:00  INFO 24140 --- [           main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name userDetailsService
+2026-03-31T23:21:00.246+07:00  INFO 24140 --- [           main] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2026-03-31T23:21:00.785+07:00  INFO 24140 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8081 (http) with context path '/'
+2026-03-31T23:21:00.797+07:00  INFO 24140 --- [           main] com.example.qltxm.QltxmApplication       : Started QltxmApplication in 4.455 seconds (process running for 4.8)
+Hibernate: select count(*) from motorbikes m1_0
+Hibernate: select count(*) from customers c1_0
+Hibernate: select au1_0.id from app_users au1_0 where au1_0.username=? limit ?
+Hibernate: select au1_0.id from app_users au1_0 where au1_0.username=? limit ?
+Hibernate: select au1_0.id,au1_0.customer_id,au1_0.full_name,au1_0.password,au1_0.role,au1_0.username from app_users au1_0 where au1_0.username=?
+Hibernate: select c1_0.id,c1_0.address,c1_0.full_name,c1_0.id_card,c1_0.notes,c1_0.phone from customers c1_0 where c1_0.id=?
+2026-03-31T23:22:30.908+07:00  INFO 24140 --- [nio-8081-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-03-31T23:22:30.908+07:00  INFO 24140 --- [nio-8081-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-03-31T23:22:30.910+07:00  INFO 24140 --- [nio-8081-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+Hibernate: select au1_0.id,au1_0.customer_id,au1_0.full_name,au1_0.password,au1_0.role,au1_0.username from app_users au1_0 where au1_0.username=?
+Hibernate: select count(*) from motorbikes m1_0
+Hibernate: select count(m1_0.id) from motorbikes m1_0 where m1_0.status=?
+Hibernate: select count(m1_0.id) from motorbikes m1_0 where m1_0.status=?
+Hibernate: select count(*) from customers c1_0
+Hibernate: select count(r1_0.id) from rentals r1_0 where r1_0.status=?
+Hibernate: select r1_0.id,r1_0.actual_return_date,r1_0.customer_id,r1_0.daily_rate,r1_0.deposit_amount,r1_0.end_date,r1_0.motorbike_id,r1_0.notes,r1_0.start_date,r1_0.status,r1_0.total_amount from rentals r1_0 order by r1_0.start_date desc,r1_0.id desc limit ?
+Hibernate: select c1_0.id,c1_0.address,c1_0.full_name,c1_0.id_card,c1_0.notes,c1_0.phone from customers c1_0 where c1_0.id=?
+Hibernate: select m1_0.id,m1_0.brand,m1_0.code,m1_0.daily_rate,m1_0.license_plate,m1_0.model,m1_0.notes,m1_0.status from motorbikes m1_0 where m1_0.id=?
+Hibernate: select m1_0.id,m1_0.brand,m1_0.code,m1_0.daily_rate,m1_0.license_plate,m1_0.model,m1_0.notes,m1_0.status from motorbikes m1_0
+Hibernate: select c1_0.id,c1_0.address,c1_0.full_name,c1_0.id_card,c1_0.notes,c1_0.phone from customers c1_0
+Hibernate: select au1_0.id,au1_0.customer_id,au1_0.full_name,au1_0.password,au1_0.role,au1_0.username from app_users au1_0 where au1_0.username=?
+Hibernate: select c1_0.id,c1_0.address,c1_0.full_name,c1_0.id_card,c1_0.notes,c1_0.phone from customers c1_0 where c1_0.id=?
+Hibernate: select au1_0.id,au1_0.customer_id,au1_0.full_name,au1_0.password,au1_0.role,au1_0.username from app_users au1_0 where au1_0.username=?
+Hibernate: select c1_0.id,c1_0.address,c1_0.full_name,c1_0.id_card,c1_0.notes,c1_0.phone from customers c1_0 where c1_0.id=?
+Hibernate: select au1_0.id,au1_0.customer_id,au1_0.full_name,au1_0.password,au1_0.role,au1_0.username from app_users au1_0 where au1_0.username=?
+Hibernate: select c1_0.id,c1_0.address,c1_0.full_name,c1_0.id_card,c1_0.notes,c1_0.phone from customers c1_0 where c1_0.id=?
+Hibernate: select m1_0.id,m1_0.brand,m1_0.code,m1_0.daily_rate,m1_0.license_plate,m1_0.model,m1_0.notes,m1_0.status from motorbikes m1_0 where m1_0.status=? order by m1_0.brand,m1_0.model
+Hibernate: select r1_0.id,r1_0.actual_return_date,r1_0.customer_id,r1_0.daily_rate,r1_0.deposit_amount,r1_0.end_date,r1_0.motorbike_id,r1_0.notes,r1_0.start_date,r1_0.status,r1_0.total_amount from rentals r1_0 join customers c1_0 on c1_0.id=r1_0.customer_id where c1_0.id=? order by r1_0.start_date desc,r1_0.id desc
+Hibernate: select count(r1_0.id) from rentals r1_0 join customers c1_0 on c1_0.id=r1_0.customer_id where c1_0.id=? and r1_0.status=?
+Hibernate: select m1_0.id,m1_0.brand,m1_0.code,m1_0.daily_rate,m1_0.license_plate,m1_0.model,m1_0.notes,m1_0.status from motorbikes m1_0 where m1_0.id=?
+Hibernate: select au1_0.id,au1_0.customer_id,au1_0.full_name,au1_0.password,au1_0.role,au1_0.username from app_users au1_0 where au1_0.username=?
+Hibernate: select c1_0.id,c1_0.address,c1_0.full_name,c1_0.id_card,c1_0.notes,c1_0.phone from customers c1_0 where c1_0.id=?
+Hibernate: select au1_0.id,au1_0.customer_id,au1_0.full_name,au1_0.password,au1_0.role,au1_0.username from app_users au1_0 where au1_0.username=?
+Hibernate: select c1_0.id,c1_0.address,c1_0.full_name,c1_0.id_card,c1_0.notes,c1_0.phone from customers c1_0 where c1_0.id=?
+Hibernate: select m1_0.id,m1_0.brand,m1_0.code,m1_0.daily_rate,m1_0.license_plate,m1_0.model,m1_0.notes,m1_0.status from motorbikes m1_0 where m1_0.status=? order by m1_0.brand,m1_0.model
+Hibernate: select au1_0.id,au1_0.customer_id,au1_0.full_name,au1_0.password,au1_0.role,au1_0.username from app_users au1_0 where au1_0.username=?
+Hibernate: select c1_0.id,c1_0.address,c1_0.full_name,c1_0.id_card,c1_0.notes,c1_0.phone from customers c1_0 where c1_0.id=?
+Hibernate: select m1_0.id,m1_0.brand,m1_0.code,m1_0.daily_rate,m1_0.license_plate,m1_0.model,m1_0.notes,m1_0.status from motorbikes m1_0 where m1_0.status=? order by m1_0.brand,m1_0.model
+Hibernate: select au1_0.id,au1_0.customer_id,au1_0.full_name,au1_0.password,au1_0.role,au1_0.username from app_users au1_0 where au1_0.username=?
+Hibernate: select c1_0.id,c1_0.address,c1_0.full_name,c1_0.id_card,c1_0.notes,c1_0.phone from customers c1_0 where c1_0.id=?
+Hibernate: select m1_0.id,m1_0.brand,m1_0.code,m1_0.daily_rate,m1_0.license_plate,m1_0.model,m1_0.notes,m1_0.status from motorbikes m1_0 where m1_0.status=? order by m1_0.brand,m1_0.model
+Hibernate: select r1_0.id,r1_0.actual_return_date,r1_0.customer_id,r1_0.daily_rate,r1_0.deposit_amount,r1_0.end_date,r1_0.motorbike_id,r1_0.notes,r1_0.start_date,r1_0.status,r1_0.total_amount from rentals r1_0 join customers c1_0 on c1_0.id=r1_0.customer_id where c1_0.id=? order by r1_0.start_date desc,r1_0.id desc
+Hibernate: select count(r1_0.id) from rentals r1_0 join customers c1_0 on c1_0.id=r1_0.customer_id where c1_0.id=? and r1_0.status=?
+Hibernate: select m1_0.id,m1_0.brand,m1_0.code,m1_0.daily_rate,m1_0.license_plate,m1_0.model,m1_0.notes,m1_0.status from motorbikes m1_0 where m1_0.id=?
+Hibernate: select au1_0.id,au1_0.customer_id,au1_0.full_name,au1_0.password,au1_0.role,au1_0.username from app_users au1_0 where au1_0.username=?
+Hibernate: select c1_0.id,c1_0.address,c1_0.full_name,c1_0.id_card,c1_0.notes,c1_0.phone from customers c1_0 where c1_0.id=?
+Hibernate: select au1_0.id,au1_0.customer_id,au1_0.full_name,au1_0.password,au1_0.role,au1_0.username from app_users au1_0 where au1_0.username=?
+Hibernate: select c1_0.id,c1_0.address,c1_0.full_name,c1_0.id_card,c1_0.notes,c1_0.phone from customers c1_0 where c1_0.id=?
+Hibernate: update customers set address=?,full_name=?,id_card=?,notes=?,phone=? where id=?
+Hibernate: update app_users set customer_id=?,full_name=?,password=?,role=?,username=? where id=?
+Hibernate: select au1_0.id,au1_0.customer_id,au1_0.full_name,au1_0.password,au1_0.role,au1_0.username from app_users au1_0 where au1_0.username=?
+Hibernate: select c1_0.id,c1_0.address,c1_0.full_name,c1_0.id_card,c1_0.notes,c1_0.phone from customers c1_0 where c1_0.id=?
+Hibernate: select au1_0.id,au1_0.customer_id,au1_0.full_name,au1_0.password,au1_0.role,au1_0.username from app_users au1_0 where au1_0.username=?
+Hibernate: select c1_0.id,c1_0.address,c1_0.full_name,c1_0.id_card,c1_0.notes,c1_0.phone from customers c1_0 where c1_0.id=?
+Hibernate: select m1_0.id,m1_0.brand,m1_0.code,m1_0.daily_rate,m1_0.license_plate,m1_0.model,m1_0.notes,m1_0.status from motorbikes m1_0 where m1_0.status=? order by m1_0.brand,m1_0.model
+Hibernate: select r1_0.id,r1_0.actual_return_date,r1_0.customer_id,r1_0.daily_rate,r1_0.deposit_amount,r1_0.end_date,r1_0.motorbike_id,r1_0.notes,r1_0.start_date,r1_0.status,r1_0.total_amount from rentals r1_0 join customers c1_0 on c1_0.id=r1_0.customer_id where c1_0.id=? order by r1_0.start_date desc,r1_0.id desc
+Hibernate: select count(r1_0.id) from rentals r1_0 join customers c1_0 on c1_0.id=r1_0.customer_id where c1_0.id=? and r1_0.status=?
+Hibernate: select m1_0.id,m1_0.brand,m1_0.code,m1_0.daily_rate,m1_0.license_plate,m1_0.model,m1_0.notes,m1_0.status from motorbikes m1_0 where m1_0.id=?
+Hibernate: select au1_0.id,au1_0.customer_id,au1_0.full_name,au1_0.password,au1_0.role,au1_0.username from app_users au1_0 where au1_0.username=?
+Hibernate: select c1_0.id,c1_0.address,c1_0.full_name,c1_0.id_card,c1_0.notes,c1_0.phone from customers c1_0 where c1_0.id=?
+Hibernate: select au1_0.id,au1_0.customer_id,au1_0.full_name,au1_0.password,au1_0.role,au1_0.username from app_users au1_0 where au1_0.username=?
+Hibernate: select c1_0.id,c1_0.address,c1_0.full_name,c1_0.id_card,c1_0.notes,c1_0.phone from customers c1_0 where c1_0.id=?
+Hibernate: update customers set address=?,full_name=?,id_card=?,notes=?,phone=? where id=?
+Hibernate: update app_users set customer_id=?,full_name=?,password=?,role=?,username=? where id=?
+Hibernate: select au1_0.id,au1_0.customer_id,au1_0.full_name,au1_0.password,au1_0.role,au1_0.username from app_users au1_0 where au1_0.username=?
+Hibernate: select c1_0.id,c1_0.address,c1_0.full_name,c1_0.id_card,c1_0.notes,c1_0.phone from customers c1_0 where c1_0.id=?
+Hibernate: select au1_0.id,au1_0.customer_id,au1_0.full_name,au1_0.password,au1_0.role,au1_0.username from app_users au1_0 where au1_0.username=?
+Hibernate: select c1_0.id,c1_0.address,c1_0.full_name,c1_0.id_card,c1_0.notes,c1_0.phone from customers c1_0 where c1_0.id=?
+Hibernate: select m1_0.id,m1_0.brand,m1_0.code,m1_0.daily_rate,m1_0.license_plate,m1_0.model,m1_0.notes,m1_0.status from motorbikes m1_0 where m1_0.status=? order by m1_0.brand,m1_0.model
+Hibernate: select r1_0.id,r1_0.actual_return_date,r1_0.customer_id,r1_0.daily_rate,r1_0.deposit_amount,r1_0.end_date,r1_0.motorbike_id,r1_0.notes,r1_0.start_date,r1_0.status,r1_0.total_amount from rentals r1_0 join customers c1_0 on c1_0.id=r1_0.customer_id where c1_0.id=? order by r1_0.start_date desc,r1_0.id desc
+Hibernate: select count(r1_0.id) from rentals r1_0 join customers c1_0 on c1_0.id=r1_0.customer_id where c1_0.id=? and r1_0.status=?
+Hibernate: select m1_0.id,m1_0.brand,m1_0.code,m1_0.daily_rate,m1_0.license_plate,m1_0.model,m1_0.notes,m1_0.status from motorbikes m1_0 where m1_0.id=?
+2026-04-01T00:50:24.770+07:00  WARN 24140 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=34m54s978ms245µs800ns).
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  01:43 h
+[INFO] Finished at: 2026-04-01T01:04:26+07:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.springframework.boot:spring-boot-maven-plugin:3.4.4:run (default-cli) on project qltxm: Process terminated with exit code: -1 -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoExecutionException

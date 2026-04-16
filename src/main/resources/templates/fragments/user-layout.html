@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head(title)">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${title}">QLTXM</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body th:fragment="layout(title, headerEyebrow, headerTitle, headerSubtitle, actions, content, extraScripts)">
+<div class="page">
+    <header class="topbar">
+        <div>
+            <p class="eyebrow" th:if="${headerEyebrow}" th:text="${headerEyebrow}">Tài khoản</p>
+            <h1 th:text="${headerTitle}">Trang người dùng</h1>
+            <p class="muted-dark" th:if="${headerSubtitle}" th:text="${headerSubtitle}"></p>
+        </div>
+
+        <nav class="action-row">
+            <a class="btn btn-secondary btn-small" th:href="@{/user}">Trang chủ</a>
+            <a class="btn btn-secondary btn-small" th:href="@{/user/rentals/new}">Đặt xe</a>
+            <a class="btn btn-secondary btn-small" th:href="@{/tracking}">Theo dõi</a>
+            <a class="btn btn-secondary btn-small" th:href="@{/user/profile}">Hồ sơ</a>
+            <form th:action="@{/logout}" method="post">
+                <button class="btn btn-secondary btn-small" type="submit">Đăng xuất</button>
+            </form>
+            <div th:if="${actions}">
+                <div th:replace="${actions}"></div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="narrow">
+        <div th:replace="${content}"></div>
+    </main>
+</div>
+
+<div th:if="${extraScripts}">
+    <div th:replace="${extraScripts}"></div>
+</div>
+</body>
+</html>
+

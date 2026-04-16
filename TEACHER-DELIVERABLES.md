@@ -42,7 +42,25 @@
 - Test có thể quay lại `InProgress` nếu cần sửa
 - Branch và commit phải chứa Jira issue key để liên kết
 
-## 6. Hướng dẫn review và nghiệm thu
+## 6. Epic / Story / Task mẫu
+- Epic: `KAN-1 Quản lý thuê xe máy`
+  - Story: `KAN-2 Đăng nhập, đăng ký và xác thực người dùng`
+    - Task: `KAN-3 Tạo giao diện đăng nhập/đăng ký`
+    - Task: `KAN-4 Cài đặt Spring Security và xác thực`
+    - Task: `KAN-5 Lưu thông tin người dùng và phân quyền`
+  - Story: `KAN-6 Quản lý danh sách xe và trạng thái thuê`
+    - Task: `KAN-7 Xây dựng model Motorbike và repository`
+    - Task: `KAN-8 Tạo controller và view danh sách xe`
+    - Task: `KAN-9 Hiển thị trạng thái xe và chi tiết xe`
+  - Story: `KAN-10 Chức năng thuê và trả xe`
+    - Task: `KAN-11 Tạo form thuê xe và xử lý đặt xe`
+    - Task: `KAN-12 Tạo form trả xe và cập nhật thanh toán`
+    - Task: `KAN-13 Tính toán tổng tiền và lưu lịch sử thuê`
+  - Story: `KAN-14 Báo cáo và dashboard`
+    - Task: `KAN-15 Thống kê doanh thu theo ngày/tuần`
+    - Task: `KAN-16 Tạo dashboard hiển thị chỉ số chính`
+
+## 7. Hướng dẫn review và nghiệm thu
 1. Mở Jira issue `KAN-2`.
 2. Kiểm tra phần `Development` và `Pull request`.
 3. Nếu muốn, merge PR trên GitHub và refresh Jira.

@@ -22,7 +22,8 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/css/**", "/register", "/login", "/error/access-denied").permitAll()
+                        .requestMatchers("/css/**", "/images/**", "/register", "/login", "/error/access-denied", "/tracking/**", "/api/tracking/**").permitAll()
+                        .requestMatchers("/api/customers/**", "/api/motorbikes/**", "/api/rentals/**").hasRole("ADMIN")
                         .requestMatchers("/motorbikes/**", "/customers/**", "/rentals/**").hasRole("ADMIN")
                         .requestMatchers("/user/**").hasRole("USER")
                         .requestMatchers("/post-login").authenticated()

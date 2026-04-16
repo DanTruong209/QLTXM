@@ -1,45 +1,34 @@
 <!DOCTYPE html>
 <html lang="vi" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trang nguoi dung | QLTXM</title>
-    <link rel="stylesheet" th:href="@{/css/app.css}">
-</head>
-<body>
-<div class="page">
-    <header class="topbar">
-        <div>
-            <p class="eyebrow">Tai khoan nguoi dung</p>
-            <h1 th:text="'Xin chao, ' + ${appUser.fullName}">Xin chao</h1>
-            <p class="muted-dark">Ban co the xem xe, gui yeu cau thue, theo doi trang thai don va cap nhat ho so ca nhan.</p>
-        </div>
-        <div class="action-row">
-            <a class="btn btn-secondary" th:href="@{/user/profile}">Ho so</a>
-            <a class="btn btn-primary" th:href="@{/user/rentals/new}">Gui yeu cau thue</a>
-            <form th:action="@{/logout}" method="post">
-                <button class="btn btn-secondary" type="submit">Dang xuat</button>
-            </form>
-        </div>
-    </header>
+<head th:replace="~{fragments/user-layout :: head('Trang người dùng | QLTXM')}"></head>
+<body th:replace="~{fragments/user-layout :: layout(
+        'Trang người dùng | QLTXM',
+        'Tài khoản người dùng',
+        'Xin chào, ' + ${appUser.fullName},
+        'Bạn có thể xem xe, gửi yêu cầu thuê, theo dõi trạng thái đơn và cập nhật hồ sơ cá nhân.',
+        null,
+        ~{::#pageContent},
+        null
+    )}">
 
+<div id="pageContent">
     <div class="flash success" th:if="${successMessage}" th:text="${successMessage}"></div>
 
     <section class="stats-grid">
         <article class="stat-card">
-            <span>Xe co the dat</span>
+            <span>Xe có thể đặt</span>
             <strong th:text="${#lists.size(availableBikes)}">0</strong>
         </article>
         <article class="stat-card accent">
-            <span>Don dang hoat dong</span>
+            <span>Đơn đang hoạt động</span>
             <strong th:text="${activeRentalCount}">0</strong>
         </article>
         <article class="stat-card">
-            <span>Don cho duyet</span>
+            <span>Đơn chờ duyệt</span>
             <strong th:text="${pendingRentalCount}">0</strong>
         </article>
         <article class="stat-card">
-            <span>Da hoan tat</span>
+            <span>Đã hoàn tất</span>
             <strong th:text="${completedRentalCount}">0</strong>
         </article>
     </section>
@@ -47,37 +36,38 @@
     <section class="panel">
         <div class="panel-header">
             <div>
-                <p class="eyebrow">Chon xe</p>
-                <h3>Xe san sang de gui yeu cau thue</h3>
-                <p class="panel-subtitle">Xem anh, thong tin xe, gia thue theo ngay va ghi chu tinh trang.</p>
+                <p class="eyebrow">Chọn xe</p>
+                <h3>Xe sẵn sàng để gửi yêu cầu thuê</h3>
+                <p class="panel-subtitle">Xem ảnh, thông tin xe, giá thuê theo ngày và ghi chú tình trạng.</p>
             </div>
-            <a class="text-link" th:href="@{/user/rentals/new}">Mo form yeu cau</a>
+            <a class="text-link" th:href="@{/user/rentals/new}">Mở form yêu cầu</a>
         </div>
 
         <form method="get" th:action="@{/user}" class="filter-bar">
-            <input type="text" name="q" th:value="${keyword}" placeholder="Tim theo ma xe, hang, mau xe, bien so">
-            <button class="btn btn-secondary" type="submit">Tim kiem</button>
-            <a class="btn btn-secondary" th:href="@{/user}">Dat lai</a>
+            <input type="text" name="q" th:value="${keyword}" placeholder="Tìm theo mã xe, hãng, mẫu xe, biển số">
+            <button class="btn btn-secondary" type="submit">Tìm kiếm</button>
+            <a class="btn btn-secondary" th:href="@{/user}">Đặt lại</a>
         </form>
 
         <div class="empty-state" th:if="${#lists.isEmpty(availableBikes)}">
-            Hien tai chua co xe trong trang thai san sang.
+            Hiện tại chưa có xe trong trạng thái sẵn sàng.
         </div>
 
         <div class="cards-grid" th:if="${!#lists.isEmpty(availableBikes)}">
             <article class="bike-card" th:each="motorbike : ${availableBikes}">
                 <img class="bike-card-image"
                      th:src="${motorbike.imageUrl != null and !#strings.isEmpty(motorbike.imageUrl)} ? ${motorbike.imageUrl} : @{/images/bikes/placeholder-bike.svg}"
-                     alt="Anh xe">
+                     alt="Ảnh xe">
                 <span class="status-badge" th:text="${@viewUtils.bikeStatusLabel(motorbike.status)}">San sang</span>
                 <h3 th:text="${motorbike.brand + ' ' + motorbike.model}">Honda Vision</h3>
                 <p class="price" th:text="${#numbers.formatDecimal(motorbike.dailyRate, 0, 'COMMA', 0, 'POINT')} + ' VND/ngay'">0 VND/ngay</p>
-                <p><strong>Ma xe:</strong> <span th:text="${motorbike.code}"></span></p>
-                <p><strong>Bien so:</strong> <span th:text="${motorbike.licensePlate}"></span></p>
-                <p><strong>Ghi chu:</strong> <span th:text="${motorbike.notes ?: 'Khong co'}"></span></p>
+                <p><strong>Mã xe:</strong> <span th:text="${motorbike.code}"></span></p>
+                <p><strong>Biển số:</strong> <span th:text="${motorbike.licensePlate}"></span></p>
+                <p><strong>Vị trí:</strong> <span th:text="${motorbike.locationLabel ?: 'Chưa cập nhật'}"></span></p>
+                <p><strong>Ghi chú:</strong> <span th:text="${motorbike.notes ?: 'Không có'}"></span></p>
                 <footer>
-                    <a class="text-link" th:href="@{'/user/motorbikes/' + ${motorbike.id}}">Xem chi tiet</a>
-                    <a class="btn btn-primary btn-small" th:href="@{/user/rentals/new}">Dat xe</a>
+                    <a class="text-link" th:href="@{'/user/motorbikes/' + ${motorbike.id}}">Xem chi tiết</a>
+                    <a class="btn btn-primary btn-small" th:href="@{/user/rentals/new}">Đặt xe</a>
                 </footer>
             </article>
         </div>
@@ -86,42 +76,48 @@
     <section class="panel">
         <div class="panel-header">
             <div>
-                <p class="eyebrow">Theo doi don</p>
-                <h3>Lich su va trang thai yeu cau thue</h3>
+                <p class="eyebrow">Theo dõi đơn</p>
+                <h3>Lịch sử và trạng thái yêu cầu thuê</h3>
             </div>
+            <a class="text-link" th:href="@{/tracking}">Nhập mã để xem bản đồ</a>
         </div>
         <div class="empty-state" th:if="${#lists.isEmpty(rentals)}">
-            Ban chua co yeu cau thue nao.
+            Bạn chưa có yêu cầu thuê nào.
         </div>
         <div class="table-wrap" th:if="${!#lists.isEmpty(rentals)}">
             <table>
                 <thead>
                 <tr>
+                    <th>Mã đặt</th>
                     <th>Xe</th>
-                    <th>Tu ngay</th>
-                    <th>Den ngay</th>
-                    <th>Tong tien</th>
-                    <th>Thanh toan</th>
-                    <th>Trang thai</th>
-                    <th>Ghi chu</th>
+                    <th>Từ ngày</th>
+                    <th>Đến ngày</th>
+                    <th>Tổng tiền</th>
+                    <th>Thanh toán</th>
+                    <th>Trạng thái</th>
+                    <th>Ghi chú</th>
                     <th></th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="rental : ${rentals}">
+                    <td>
+                        <div th:text="${rental.bookingCode}">BOOK-000001</div>
+                        <a class="text-link" th:href="@{'/tracking?bookingCode=' + ${rental.bookingCode}}">Xem vị trí</a>
+                    </td>
                     <td th:text="${rental.motorbike.brand + ' ' + rental.motorbike.model}">Xe</td>
                     <td th:text="${rental.startDate}">2026-03-31</td>
                     <td th:text="${rental.endDate}">2026-04-01</td>
                     <td th:text="${#numbers.formatDecimal(rental.finalAmount ?: rental.totalAmount, 0, 'COMMA', 0, 'POINT')} + ' VND'">0</td>
                     <td>
                         <div th:text="${@viewUtils.paymentStatusLabel(rental.paymentStatus)}">Da coc</div>
-                        <small class="muted-dark" th:text="${rental.paymentMethod != null ? @viewUtils.paymentMethodLabel(rental.paymentMethod) : 'Chua chon'}">Chuyen khoan</small>
+                        <small class="muted-dark" th:text="${rental.paymentMethod != null ? @viewUtils.paymentMethodLabel(rental.paymentMethod) : 'Chưa chọn'}">Chuyển khoản</small>
                     </td>
                     <td><span class="status-badge" th:text="${@viewUtils.rentalStatusLabel(rental.status)}">Trang thai</span></td>
-                    <td th:text="${rental.returnNotes ?: rental.notes ?: 'Khong co'}">Khong co</td>
+                    <td th:text="${rental.returnNotes ?: rental.notes ?: 'Không có'}">Không có</td>
                     <td>
                         <form th:if="${rental.status.name() == 'PENDING'}" th:action="@{'/user/rentals/' + ${rental.id} + '/cancel'}" method="post">
-                            <button class="btn btn-danger btn-small" type="submit">Huy yeu cau</button>
+                            <button class="btn btn-danger btn-small" type="submit">Hủy yêu cầu</button>
                         </form>
                     </td>
                 </tr>
@@ -130,5 +126,6 @@
         </div>
     </section>
 </div>
+
 </body>
 </html>

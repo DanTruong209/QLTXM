@@ -1,50 +1,50 @@
 <!DOCTYPE html>
 <html lang="vi" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thanh toan | QLTXM</title>
-    <link rel="stylesheet" th:href="@{/css/app.css}">
-</head>
-<body>
-<div class="page narrow">
-    <header class="topbar">
-        <div>
-            <p class="eyebrow">Thanh toan don thue</p>
-            <h1>Xac nhan tien coc truoc khi gui yeu cau</h1>
-        </div>
-        <a class="btn btn-secondary" th:href="@{/user/rentals/new}">Sua thong tin</a>
-    </header>
+<head th:replace="~{fragments/user-layout :: head('Thanh toán | QLTXM')}"></head>
+<body th:replace="~{fragments/user-layout :: layout(
+        'Thanh toán | QLTXM',
+        'Thanh toán đơn thuê',
+        'Xác nhận tiền cọc trước khi gửi yêu cầu',
+        null,
+        ~{::#headerActions},
+        ~{::#pageContent},
+        null
+    )}">
 
+<div id="headerActions">
+    <a class="btn btn-secondary" th:href="@{/user/rentals/new}">Sửa thông tin</a>
+</div>
+
+<div id="pageContent">
     <div class="flash error" th:if="${formError}" th:text="${formError}"></div>
 
     <section class="checkout-layout">
         <article class="panel checkout-summary">
-            <p class="eyebrow">Tom tat don hang</p>
+            <p class="eyebrow">Tóm tắt đơn hàng</p>
             <div class="checkout-bike">
                 <img class="checkout-bike-image"
                      th:src="${checkoutSummary.motorbike.imageUrl != null and !#strings.isEmpty(checkoutSummary.motorbike.imageUrl)} ? ${checkoutSummary.motorbike.imageUrl} : @{/images/bikes/placeholder-bike.svg}"
-                     alt="Anh xe">
+                     alt="Ảnh xe">
                 <div>
                     <h3 th:text="${checkoutSummary.motorbike.brand + ' ' + checkoutSummary.motorbike.model}">Honda Vision</h3>
                     <p class="muted-dark" th:text="${checkoutSummary.motorbike.code + ' - ' + checkoutSummary.motorbike.licensePlate}">MX01</p>
-                    <p class="muted-dark" th:text="${paymentForm.startDate + ' den ' + paymentForm.endDate}">2026-04-06 den 2026-04-08</p>
+                    <p class="muted-dark" th:text="${paymentForm.startDate + ' đến ' + paymentForm.endDate}">2026-04-06 đến 2026-04-08</p>
                 </div>
             </div>
             <div class="summary-list">
-                <div><span>So ngay thue</span><strong th:text="${checkoutSummary.rentalDays + ' ngay'}">3 ngay</strong></div>
-                <div><span>Gia theo ngay</span><strong th:text="${#numbers.formatDecimal(checkoutSummary.dailyRate, 0, 'COMMA', 0, 'POINT') + ' VND'}">0 VND</strong></div>
-                <div><span>Tong tien thue tam tinh</span><strong th:text="${#numbers.formatDecimal(checkoutSummary.rentalTotal, 0, 'COMMA', 0, 'POINT') + ' VND'}">0 VND</strong></div>
-                <div><span>Tien coc can thanh toan</span><strong class="accent-text" th:text="${#numbers.formatDecimal(checkoutSummary.depositAmount, 0, 'COMMA', 0, 'POINT') + ' VND'}">0 VND</strong></div>
-                <div><span>Con lai khi giao/tra xe</span><strong th:text="${#numbers.formatDecimal(checkoutSummary.remainingAmount, 0, 'COMMA', 0, 'POINT') + ' VND'}">0 VND</strong></div>
+                <div><span>Số ngày thuê</span><strong th:text="${checkoutSummary.rentalDays + ' ngày'}">3 ngày</strong></div>
+                <div><span>Giá theo ngày</span><strong th:text="${#numbers.formatDecimal(checkoutSummary.dailyRate, 0, 'COMMA', 0, 'POINT') + ' VND'}">0 VND</strong></div>
+                <div><span>Tổng tiền thuê tạm tính</span><strong th:text="${#numbers.formatDecimal(checkoutSummary.rentalTotal, 0, 'COMMA', 0, 'POINT') + ' VND'}">0 VND</strong></div>
+                <div><span>Tiền cọc cần thanh toán</span><strong class="accent-text" th:text="${#numbers.formatDecimal(checkoutSummary.depositAmount, 0, 'COMMA', 0, 'POINT') + ' VND'}">0 VND</strong></div>
+                <div><span>Còn lại khi giao/trả xe</span><strong th:text="${#numbers.formatDecimal(checkoutSummary.remainingAmount, 0, 'COMMA', 0, 'POINT') + ' VND'}">0 VND</strong></div>
             </div>
             <div class="payment-note">
-                He thong ghi nhan tien coc ngay trong yeu cau thue. Phan con lai van duoc doi soat khi giao xe hoac ket thuc don.
+                Hệ thống ghi nhận tiền cọc ngay trong yêu cầu thuê. Phần còn lại vẫn được đối soát khi giao xe hoặc kết thúc đơn.
             </div>
         </article>
 
         <article class="panel">
-            <p class="eyebrow">Thong tin thanh toan</p>
+            <p class="eyebrow">Thông tin thanh toán</p>
             <form th:action="@{/user/rentals}" th:object="${paymentForm}" method="post" class="form-grid single-column">
                 <input type="hidden" th:field="*{motorbikeId}">
                 <input type="hidden" th:field="*{startDate}">
@@ -53,9 +53,9 @@
                 <input type="hidden" th:field="*{notes}">
 
                 <label>
-                    <span>Phuong thuc thanh toan</span>
+                    <span>Phương thức thanh toán</span>
                     <select th:field="*{paymentMethod}">
-                        <option value="">Chon phuong thuc</option>
+                        <option value="">Chọn phương thức</option>
                         <option th:each="method : ${paymentMethods}"
                                 th:value="${method}"
                                 th:text="${@viewUtils.paymentMethodLabel(method)}"></option>
@@ -66,36 +66,37 @@
                 <section class="payment-method-grid">
                     <article class="payment-card">
                         <span class="payment-icon">QR</span>
-                        <h3>Chuyen khoan ngan hang</h3>
+                        <h3>Chuyển khoản ngân hàng</h3>
                         <p>Vietcombank - 0123 456 789</p>
-                        <p>Chu tai khoan: QLTXM RENTAL</p>
+                        <p>Chủ tài khoản: QLTXM RENTAL</p>
                     </article>
                     <article class="payment-card">
                         <span class="payment-icon">M</span>
-                        <h3>Vi MoMo</h3>
-                        <p>So dien thoai nhan tien: 0901 234 567</p>
-                        <p>Noi dung: DATCOC + ma xe</p>
+                        <h3>Ví MoMo</h3>
+                        <p>Số điện thoại nhận tiền: 0901 234 567</p>
+                        <p>Nội dung: DATCOC + mã xe</p>
                     </article>
                     <article class="payment-card">
                         <span class="payment-icon">C</span>
-                        <h3>Tien mat</h3>
-                        <p>Thanh toan tai cua hang khi den xem xe.</p>
-                        <p>He thong van ghi nhan de xu ly don.</p>
+                        <h3>Tiền mặt</h3>
+                        <p>Thanh toán tại cửa hàng khi đến xem xe.</p>
+                        <p>Hệ thống vẫn ghi nhận để xử lý đơn.</p>
                     </article>
                 </section>
 
                 <label class="checkbox-row">
                     <input type="checkbox" th:field="*{depositConfirmed}">
-                    <span>Toi da thanh toan hoac san sang thanh toan tien coc theo thong tin tren.</span>
+                    <span>Tôi đã thanh toán hoặc sẵn sàng thanh toán tiền cọc theo thông tin trên.</span>
                 </label>
                 <small class="field-error" th:errors="*{depositConfirmed}"></small>
 
                 <div class="form-actions">
-                    <button class="btn btn-primary" type="submit">Xac nhan thanh toan va gui don</button>
+                    <button class="btn btn-primary" type="submit">Xác nhận thanh toán và gửi đơn</button>
                 </div>
             </form>
         </article>
     </section>
 </div>
+
 </body>
 </html>

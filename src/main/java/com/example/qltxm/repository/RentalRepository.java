@@ -23,6 +23,8 @@ public interface RentalRepository extends JpaRepository<Rental, Long> {
 
     List<Rental> findAllByCustomerIdOrderByStartDateDescIdDesc(Long customerId);
 
+    List<Rental> findAllByMotorbikeIdOrderByStartDateDescIdDesc(Long motorbikeId);
+
     @Query("""
             select r from Rental r
             where (:status is null or r.status = :status)

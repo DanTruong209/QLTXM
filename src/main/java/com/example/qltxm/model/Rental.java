@@ -18,6 +18,7 @@ import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.Locale;
 
 @Entity
 @Table(name = "rentals")
@@ -233,5 +234,9 @@ public class Rental {
 
     public void setReturnNotes(String returnNotes) {
         this.returnNotes = returnNotes;
+    }
+
+    public String getBookingCode() {
+        return id == null ? null : String.format(Locale.ROOT, "BOOK-%06d", id);
     }
 }
